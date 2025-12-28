@@ -1,0 +1,67 @@
+<svg width="512" height="512" viewBox="0 0 512 512"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <!-- WonderLife Gradient -->
+    <linearGradient id="wlnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <!-- Neon Glow -->
+    <filter id="neonGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Plate (optional) -->
+  <rect x="0" y="0" width="512" height="512" rx="72"
+        fill="rgba(10,10,20,0.88)"/>
+
+  <!-- Spiral Core -->
+  <path
+    d="
+      M256 96
+      C170 96 112 158 112 236
+      C112 318 178 372 256 372
+      C322 372 368 334 368 292
+      C368 244 324 216 280 216
+      C242 216 220 244 220 266
+      C220 296 254 308 276 296
+    "
+    fill="none"
+    stroke="url(#wlnGradient)"
+    stroke-width="18"
+    stroke-linecap="round"
+    filter="url(#neonGlow)"
+  />
+
+  <!-- Inner Accent -->
+  <circle
+    cx="256"
+    cy="268"
+    r="22"
+    fill="url(#wlnGradient)"
+    filter="url(#neonGlow)"
+  />
+
+  <!-- UBISOFT Text -->
+  <text
+    x="256"
+    y="430"
+    text-anchor="middle"
+    font-size="48"
+    font-weight="700"
+    letter-spacing="6"
+    fill="url(#wlnGradient)"
+    filter="url(#neonGlow)"
+    style="font-family: Orbitron, Arial, sans-serif;">
+    UBISOFT
+  </text>
+
+</svg>

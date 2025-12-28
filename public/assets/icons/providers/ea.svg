@@ -1,0 +1,74 @@
+<svg width="512" height="512" viewBox="0 0 512 512"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <!-- WonderLife Neon Gradient -->
+    <linearGradient id="wlnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <!-- Neon Glow -->
+    <filter id="neonGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Plate (optional) -->
+  <rect x="0" y="0" width="512" height="512" rx="72"
+        fill="rgba(10,10,20,0.88)"/>
+
+  <!-- Outer Ring -->
+  <circle
+    cx="256"
+    cy="240"
+    r="120"
+    fill="none"
+    stroke="url(#wlnGradient)"
+    stroke-width="16"
+    filter="url(#neonGlow)"
+  />
+
+  <!-- Stylized E -->
+  <path
+    d="M200 190 H290
+       M200 240 H270
+       M200 290 H290"
+    stroke="url(#wlnGradient)"
+    stroke-width="16"
+    stroke-linecap="round"
+    filter="url(#neonGlow)"
+  />
+
+  <!-- Stylized A -->
+  <path
+    d="M320 290 L350 190 L380 290
+       M334 255 H366"
+    fill="none"
+    stroke="url(#wlnGradient)"
+    stroke-width="16"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#neonGlow)"
+  />
+
+  <!-- EA Text -->
+  <text
+    x="256"
+    y="430"
+    text-anchor="middle"
+    font-size="52"
+    font-weight="700"
+    letter-spacing="6"
+    fill="url(#wlnGradient)"
+    filter="url(#neonGlow)"
+    style="font-family: Orbitron, Arial, sans-serif;">
+    EA
+  </text>
+
+</svg>

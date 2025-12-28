@@ -1,0 +1,214 @@
+/* ==================================================
+   GAME GRID SYSTEM
+   Engels811 Network – Dark Crimson Theme
+   Zweck:
+   - Grid Layouts
+   - Toolbar & Filters
+   - KEINE Farben / Effekte
+================================================== */
+
+/* =========================
+   GAMES TOOLBAR
+========================= */
+.games-toolbar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.games-search {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.75rem 1rem;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 50, 50, 0.25);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.games-search:focus {
+    outline: none;
+    border-color: #ff4444;
+    background: rgba(30, 30, 30, 0.9);
+    box-shadow: 0 0 0 3px rgba(255, 50, 50, 0.1);
+}
+
+.games-search::placeholder {
+    color: #666;
+}
+
+.games-sort {
+    padding: 0.75rem 1rem;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 50, 50, 0.25);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.games-sort:hover,
+.games-sort:focus {
+    outline: none;
+    border-color: #ff4444;
+    background: rgba(30, 30, 30, 0.9);
+}
+
+/* =========================
+   CATEGORY FILTERS
+========================= */
+.category-filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.category-filters button {
+    padding: 0.5rem 1rem;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 50, 50, 0.25);
+    border-radius: 6px;
+    color: #e8e8e8;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+}
+
+.category-filters button:hover {
+    background: rgba(30, 30, 30, 0.9);
+    border-color: #ff4444;
+    color: #ff6666;
+}
+
+.category-filters button.active {
+    background: linear-gradient(135deg, #ff3232 0%, #cc0000 100%);
+    border-color: #ff3232;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(255, 50, 50, 0.3);
+}
+
+/* =========================
+   GAMES GRID
+========================= */
+.games-grid {
+    display: grid;
+    gap: 26px;
+}
+
+/* =========================
+   STANDARD GRID (AUTO-FILL)
+========================= */
+.games-grid.auto {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* =========================
+   5-SPALTEN GRID (ALLE SPIELE)
+========================= */
+.games-grid-5 {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 1.5rem;
+}
+
+/* =========================
+   TOP GAMES GRID
+========================= */
+.games-grid.top {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* =========================
+   HERO GRID (TOP-SPIELE-SEKTION)
+========================= */
+.games-grid.hero {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+/* =========================
+   HERO GAME (#1)
+========================= */
+.game-card.hero {
+    grid-column: span 2;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* ≤ 1600px – 5-Spalten Grid */
+@media (max-width: 1600px) {
+    .games-grid-5 {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}
+
+/* ≤ 1200px */
+@media (max-width: 1200px) {
+    .games-grid-5 {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    .games-grid.top,
+    .games-grid.hero {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .game-card.hero {
+        grid-column: span 2;
+    }
+}
+
+/* ≤ 768px */
+@media (max-width: 768px) {
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .games-grid-5 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .games-grid.top,
+    .games-grid.hero {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+    }
+
+    .game-card.hero {
+        grid-column: span 2;
+    }
+
+    .games-toolbar {
+        flex-direction: column;
+    }
+
+    .games-search {
+        width: 100%;
+    }
+
+    .category-filters {
+        width: 100%;
+    }
+}
+
+/* ≤ 480px */
+@media (max-width: 480px) {
+    .games-grid,
+    .games-grid-5 {
+        grid-template-columns: 1fr !important;
+        gap: 18px;
+    }
+
+    .game-card.hero {
+        grid-column: span 1;
+    }
+}

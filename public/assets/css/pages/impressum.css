@@ -1,0 +1,93 @@
+/* =====================================================
+   IMPRINT – ISOLATED CSS
+===================================================== */
+
+.imprint-wrapper {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 60px 20px 80px;
+    color: #e6e6e6;
+}
+
+/* Header */
+.imprint-head {
+    margin-bottom: 48px;
+}
+.imprint-center {
+    text-align: center;
+}
+.imprint-icon {
+    font-size: 42px;
+    display: block;
+    margin-bottom: 12px;
+}
+.imprint-title {
+    font-size: 34px;
+    font-weight: 700;
+}
+.imprint-accent {
+    color: #ff1a1a;
+}
+.imprint-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+}
+
+/* Stack */
+.imprint-stack {
+    display: grid;
+    gap: 22px;
+}
+
+/* Cards */
+.imprint-card {
+    background: rgba(15, 10, 12, 0.9);
+    border-radius: 16px;
+    padding: 26px 28px;
+    box-shadow:
+        0 0 0 1px rgba(255,26,26,0.25),
+        0 18px 40px rgba(0,0,0,0.6);
+}
+.imprint-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+/* Notice */
+.imprint-notice {
+    border-left: 4px solid #ff1a1a;
+}
+
+/* Text */
+.imprint-text-muted {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.7);
+}
+
+/* Links */
+.imprint-wrapper a {
+    color: #ff4d4d;
+    text-decoration: none;
+}
+.imprint-wrapper a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.imprint-footer {
+    margin-top: 50px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .imprint-title {
+        font-size: 28px;
+    }
+    .imprint-card {
+        padding: 22px 20px;
+    }
+}

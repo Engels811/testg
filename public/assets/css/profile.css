@@ -1,0 +1,674 @@
+/* =====================================================
+   ENGELS811 NETWORK – PROFILE.CSS (FINAL)
+   Unified Dashboard / Profile – Fire • Dark • Neon
+===================================================== */
+
+/* =====================================================
+   ROOT VARS
+===================================================== */
+
+:root {
+    --primary: #ff1a1a;
+    --primary-dark: #800000;
+
+    --role-admin: #ff1a1a;
+    --role-moderator: #ff9f1a;
+    --role-superadmin: #b400ff;
+    --role-user: #2cff6b;
+
+    --text-main: #ffffff;
+    --text-secondary: #cfcfcf;
+    --text-muted: #9a9a9a;
+}
+
+/* =====================================================
+   BODY (DASHBOARD)
+===================================================== */
+
+body.dashboard-body {
+    background: radial-gradient(
+        circle at top,
+        #140607 0%,
+        #050406 55%,
+        #000000 100%
+    );
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+/* =====================================================
+   DASHBOARD SHELL
+===================================================== */
+
+.dashboard-shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 28px;
+    max-width: 1400px;
+    margin: 48px auto;
+    padding: 0 24px;
+}
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.dashboard-sidebar {
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.04),
+        rgba(255,255,255,0.02)
+    );
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,26,26,.15),
+        0 18px 60px rgba(255,26,26,.25);
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 11px 14px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: .2s;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: linear-gradient(
+        135deg,
+        rgba(255,26,26,.35),
+        rgba(255,26,26,.15)
+    );
+    color: #fff;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,26,26,.5),
+        0 0 18px rgba(255,26,26,.35);
+}
+
+/* =====================================================
+   HERO (DASHBOARD + PROFILE)
+===================================================== */
+
+.profile-hero {
+    background: linear-gradient(
+        135deg,
+        rgba(255,26,26,.18),
+        rgba(0,0,0,.65)
+    );
+    border-radius: 22px;
+    padding: 34px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 60px rgba(255,26,26,.35);
+}
+
+.profile-hero-inner {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* =====================================================
+   AVATAR XL
+===================================================== */
+
+.profile-avatar-xl {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, #ff1a1a, #800000);
+}
+
+.profile-avatar-xl img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Live Status */
+
+.profile-status {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #000;
+}
+
+.profile-status.online {
+    background: #2cff6b;
+    box-shadow: 0 0 12px #2cff6b;
+}
+
+.profile-status.away {
+    background: #ff9f1a;
+    box-shadow: 0 0 12px #ff9f1a;
+}
+
+.profile-status.offline {
+    background: #666;
+}
+
+/* =====================================================
+   HERO META
+===================================================== */
+
+.profile-hero-meta h1 {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.profile-subtitle {
+    font-size: .9rem;
+    color: var(--text-muted);
+}
+
+/* =====================================================
+   ROLE BADGES
+===================================================== */
+
+.role-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: .7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin: 8px 0;
+}
+
+.role-admin {
+    background: rgba(255,26,26,.25);
+    color: var(--role-admin);
+}
+
+.role-moderator {
+    background: rgba(255,159,26,.25);
+    color: var(--role-moderator);
+}
+
+.role-superadmin {
+    background: rgba(180,0,255,.25);
+    color: var(--role-superadmin);
+    box-shadow: 0 0 18px rgba(180,0,255,.6);
+}
+
+.role-user {
+    background: rgba(44,255,107,.25);
+    color: var(--role-user);
+}
+
+/* =====================================================
+   GRID + CARDS
+===================================================== */
+
+.card {
+    background: linear-gradient(
+        135deg,
+        rgba(18,10,12,.96),
+        rgba(10,10,15,.96)
+    );
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,26,26,.15),
+        0 16px 50px rgba(255,26,26,.28);
+}
+
+.card h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+/* =====================================================
+   PROFILE LIST
+===================================================== */
+
+.profile-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-list li {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255,255,255,.08);
+}
+
+.profile-list li:last-child {
+    border-bottom: none;
+}
+
+.profile-list span {
+    font-size: .7rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: .06em;
+}
+
+.profile-list strong {
+    font-weight: 700;
+}
+
+/* =====================================================
+   ACCOUNTDATEN FORM
+===================================================== */
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.profile-form label {
+    font-size: .7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+}
+
+.profile-form input {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,26,26,.35);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: #fff;
+    transition: .2s;
+}
+
+.profile-form input:focus {
+    outline: none;
+    box-shadow:
+        0 0 0 2px rgba(255,26,26,.25),
+        0 0 22px rgba(255,26,26,.35);
+}
+
+.profile-form input:disabled {
+    background: rgba(255,255,255,.04);
+    border-style: dashed;
+    color: #aaa;
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn-primary {
+    padding: 12px 22px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff1a1a, #cc0000);
+    border: none;
+    font-weight: 900;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 6px 30px rgba(255,26,26,.6);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 10px 45px rgba(255,26,26,.8);
+}
+
+.btn-link {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--primary);
+    border: 1px solid rgba(255,26,26,.35);
+}
+
+.btn-link:hover {
+    background: rgba(255,26,26,.1);
+}
+
+/* =====================================================
+   SECURITY CARD
+===================================================== */
+
+.profile-security-card {
+    border: 1px solid rgba(255,26,26,.5);
+    background: linear-gradient(
+        135deg,
+        rgba(255,26,26,.18),
+        rgba(0,0,0,.7)
+    );
+    box-shadow: 0 0 45px rgba(255,26,26,.35);
+    position: relative;
+}
+
+.profile-security-card::before {
+    content: "🛡️";
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: 2.2rem;
+    opacity: .15;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+    .dashboard-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-sidebar {
+        display: none;
+    }
+
+    .profile-hero-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.alert-success {
+    background: rgba(44,255,107,.15);
+    border: 1px solid rgba(44,255,107,.4);
+    color: #2cff6b;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+.alert-error {
+    background: rgba(255,26,26,.15);
+    border: 1px solid rgba(255,26,26,.4);
+    color: #ff5a5a;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
+
+/* =========================================================
+   WONDERLIFE – DASHBOARD SECURITY (FINAL)
+   Dark · Neon Red · Clean
+========================================================= */
+
+/* ===============================
+   LAYOUT
+================================ */
+
+.dashboard-head {
+    margin-bottom: 32px;
+}
+
+.dashboard-head h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashboard-head p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #9a9a9a;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 26px;
+}
+
+/* ===============================
+   CARDS
+================================ */
+
+.card {
+    background: linear-gradient(
+        180deg,
+        #0b0b0b,
+        #070707
+    );
+    border-radius: 14px;
+    padding: 22px 24px;
+    position: relative;
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 10px 30px rgba(0,0,0,0.65);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow:
+        inset 0 0 0 1px rgba(196,0,0,0.08),
+        inset 0 -20px 30px rgba(196,0,0,0.04);
+}
+
+.card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ===============================
+   FORMS
+================================ */
+
+.card label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #b5b5b5;
+}
+
+.card input[type="password"] {
+    width: 100%;
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.card input:focus {
+    outline: none;
+    border-color: rgba(196,0,0,0.55);
+    box-shadow: 0 0 0 2px rgba(196,0,0,0.15);
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+
+.btn-primary,
+.btn-danger,
+.card button {
+    margin-top: 16px;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(
+        135deg,
+        #c40000,
+        #8a0000
+    );
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(196,0,0,0.35);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+}
+
+.btn-danger {
+    background: #260000;
+    color: #ff8a8a;
+    border: 1px solid rgba(255,80,80,0.4);
+}
+
+.btn-danger:hover {
+    background: #3a0000;
+}
+
+.btn-full {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* ===============================
+   SESSION LIST
+================================ */
+
+.dashboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.dashboard-list li:last-child {
+    border-bottom: none;
+}
+
+.dashboard-list span {
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.dashboard-list small {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #8c8c8c;
+}
+
+.dashboard-list em {
+    font-size: 13px;
+    color: #6f6f6f;
+}
+
+/* ===============================
+   STATUS TEXTS
+================================ */
+
+.status-active {
+    color: #8cff8c;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.muted {
+    color: #8a8a8a;
+    font-size: 13px;
+}
+
+/* =========================
+   LOGIN HISTORY – SCROLLBOX
+========================= */
+
+.login-scrollbox {
+    max-height: 260px;            /* Höhe anpassbar */
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+/* Optional: Scrollbar Styling (WebKit) */
+.login-scrollbox::-webkit-scrollbar {
+    width: 6px;
+}
+
+.login-scrollbox::-webkit-scrollbar-thumb {
+    background: rgba(255, 26, 26, 0.6);
+    border-radius: 6px;
+}
+
+.login-scrollbox::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+}
+
+/* =========================
+   SESSION LIST
+========================= */
+
+.session-current {
+    border-left: 4px solid #ff1a1a;
+    padding-left: 10px;
+}
+
+.session-badge {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ff1a1a;
+}
+
+.login-scrollbox {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.btn-small {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+}
+
+.dashboard-grid-security {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 26px;
+    align-items: start;
+}
+
+.sessions-list,
+.login-scrollbox {
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.login-scrollbox::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff1a1a, #800000);
+}
+
+.avatar,
+img.avatar {
+    border-radius: 50%;
+}

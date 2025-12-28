@@ -1,0 +1,70 @@
+<svg width="512" height="512" viewBox="0 0 512 512"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <!-- WonderLife Gradient -->
+    <linearGradient id="wlnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <!-- Neon Glow -->
+    <filter id="neonGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background Plate (optional) -->
+  <rect x="0" y="0" width="512" height="512" rx="72"
+        fill="rgba(10,10,20,0.88)"/>
+
+  <!-- Orbital Arcs (Network Motif) -->
+  <path d="M156 256 C156 188 212 140 256 140
+           C300 140 356 188 356 256
+           C356 324 300 372 256 372"
+        fill="none"
+        stroke="url(#wlnGradient)"
+        stroke-width="16"
+        stroke-linecap="round"
+        filter="url(#neonGlow)"/>
+
+  <path d="M192 196 C232 160 300 160 336 200
+           C372 240 360 308 316 340
+           C272 372 216 360 184 324"
+        fill="none"
+        stroke="url(#wlnGradient)"
+        stroke-width="12"
+        stroke-linecap="round"
+        filter="url(#neonGlow)"/>
+
+  <path d="M176 312 C152 268 168 212 216 184
+           C264 156 320 168 348 216"
+        fill="none"
+        stroke="url(#wlnGradient)"
+        stroke-width="10"
+        stroke-linecap="round"
+        filter="url(#neonGlow)"/>
+
+  <!-- Core Node -->
+  <circle cx="256" cy="256" r="22"
+          fill="url(#wlnGradient)"
+          filter="url(#neonGlow)"/>
+
+  <!-- BATTLE.NET Text -->
+  <text x="256" y="430"
+        text-anchor="middle"
+        font-size="44"
+        font-weight="700"
+        letter-spacing="4"
+        fill="url(#wlnGradient)"
+        filter="url(#neonGlow)"
+        style="font-family: Orbitron, Arial, sans-serif;">
+    BATTLE·NET
+  </text>
+
+</svg>

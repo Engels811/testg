@@ -1,0 +1,49 @@
+<svg width="512" height="512" viewBox="0 0 512 512"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <!-- Neon Gradient -->
+    <linearGradient id="wlnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b40623ff"/>
+      <stop offset="50%" stop-color="#800429ff"/>
+      <stop offset="100%" stop-color="#63045bff"/>
+    </linearGradient>
+
+    <!-- Glow Effect -->
+    <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background (transparent, optional dark plate) -->
+  <rect x="0" y="0" width="512" height="512" rx="64"
+        fill="rgba(46, 2, 12, 0.85)"/>
+
+  <!-- Stylized V -->
+  <path
+    d="M140 120 L256 360 L372 120
+       L332 120 L256 280
+       L180 120 Z"
+    fill="url(#wlnGradient)"
+    filter="url(#neonGlow)"
+  />
+
+  <!-- FIVE M Text -->
+  <text
+    x="256"
+    y="420"
+    text-anchor="middle"
+    font-size="56"
+    font-weight="700"
+    letter-spacing="6"
+    fill="url(#wlnGradient)"
+    filter="url(#neonGlow)"
+    style="font-family: Orbitron, Arial, sans-serif;">
+    FIVE·M
+  </text>
+
+</svg>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    width="512"
+    height="512"
+    viewBox="0 0 512 512"
+    xmlns="http://www.w3.org/2000/svg"
+>
+
+    <defs>
+        <!-- Neon Glow -->
+        <filter id="neon">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+
+        <!-- Gradient -->
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#7b5cff"/>
+            <stop offset="100%" stop-color="#00ffe1"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Background Ring -->
+    <circle
+        cx="256"
+        cy="256"
+        r="210"
+        fill="none"
+        stroke="url(#grad)"
+        stroke-width="14"
+        opacity="0.85"
+        filter="url(#neon)"
+    />
+
+    <!-- Controller Shape -->
+    <path
+        d="
+            M156 300
+            C120 300 100 270 100 240
+            C100 200 140 190 170 200
+            L210 220
+            H302
+            L342 200
+            C372 190 412 200 412 240
+            C412 270 392 300 356 300
+            C330 300 320 285 310 270
+            H202
+            C192 285 182 300 156 300
+            Z
+        "
+        fill="#0b0b12"
+        stroke="url(#grad)"
+        stroke-width="8"
+        filter="url(#neon)"
+    />
+
+    <!-- Buttons -->
+    <circle cx="330" cy="235" r="8" fill="#00ffe1"/>
+    <circle cx="350" cy="255" r="8" fill="#7b5cff"/>
+    <circle cx="330" cy="275" r="8" fill="#00ffe1"/>
+    <circle cx="310" cy="255" r="8" fill="#7b5cff"/>
+
+    <!-- D-Pad -->
+    <rect x="165" y="245" width="12" height="36" rx="2" fill="#7b5cff"/>
+    <rect x="153" y="257" width="36" height="12" rx="2" fill="#7b5cff"/>
+
+</svg>

@@ -1,0 +1,48 @@
+/* ==================================================
+   BRAND LOGO – ISOLATED STYLES
+   Engels811 Network
+   (keine Layout-Auswirkungen)
+================================================== */
+
+/* Container bleibt neutral */
+.brand {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    overflow: visible; /* erlaubt Überstand */
+}
+
+/* Klickbarer Bereich */
+.brand-logo-link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    text-decoration: none;
+}
+
+/* DAS LOGO – HIER darfst du arbeiten */
+.brand-logo {
+    height: 150px;              /* NUR HIER Größe ändern */
+    width: auto;
+    object-fit: contain;
+
+    position: relative;
+    top: -8px;                 /* Feinjustierung */
+
+    filter: drop-shadow(0 0 8px rgba(255, 26, 26, 0.45));
+    transition: filter 0.2s ease;
+}
+
+/* Hover */
+.brand-logo-link:hover .brand-logo {
+    filter: drop-shadow(0 0 12px rgba(255, 26, 26, 0.75));
+}
+
+/* Mobile Sicherheit */
+@media (max-width: 768px) {
+    .brand-logo {
+        height: 44px;
+        top: -4px;
+    }
+}

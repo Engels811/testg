@@ -1,0 +1,120 @@
+/* ==================================================
+   GAME EFFECTS & STATES
+   Engels811 Network – Dark Crimson Theme
+   Zweck:
+   - Hover-Effekte
+   - Status (Top / Hidden)
+   - Admin-Overlay
+   - KEIN Layout
+================================================== */
+
+/* =========================
+   HOVER EFFECTS
+========================= */
+
+.game-card:hover {
+    transform: translateY(-6px) scale(1.03);
+
+    /* Red Glow passend zu Engels811 Brand */
+    box-shadow:
+        0 0 34px rgba(255, 50, 50, 0.5),
+        0 18px 40px rgba(0, 0, 0, .7);
+    
+    border-color: rgba(255, 50, 50, 0.4);
+}
+
+/* Bild-Zoom NUR im Cover */
+.game-card:hover .game-cover img {
+    transform: scale(1.05);
+}
+
+/* =========================
+   STATES
+========================= */
+
+/* Top Game */
+.game-card.is-top {
+    outline: 2px solid rgba(255, 50, 50, 0.6);
+    box-shadow:
+        0 0 28px rgba(255, 50, 50, 0.45),
+        inset 0 0 0 1px rgba(255, 50, 50, 0.15);
+}
+
+/* Hidden / Inactive */
+.game-card.is-hidden {
+    opacity: .45;
+    filter: grayscale(.65);
+    border-color: rgba(100, 100, 100, 0.3);
+}
+
+/* =========================
+   ADMIN OVERLAY
+   Overlay liegt NUR über dem Cover
+========================= */
+
+/* Cover ist Bezugspunkt */
+.game-cover {
+    position: relative;
+}
+
+/* Overlay selbst */
+.game-admin-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(3px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    opacity: 0;
+    transition: opacity .25s ease;
+
+    /* Über Bild, unter Badges */
+    z-index: 4;
+    
+    border-radius: 12px;
+    border: 1px solid rgba(255, 50, 50, 0.3);
+}
+
+/* Overlay sichtbar beim Hover über die Card */
+.game-card:hover .game-admin-overlay {
+    opacity: 1;
+}
+
+/* =========================
+   SAFETY LAYER
+   Meta & Spielzeit bleiben immer sichtbar
+========================= */
+
+.game-meta {
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================
+   ADMIN ICONS
+========================= */
+
+.admin-icon {
+    position: relative;
+    z-index: 6;
+
+    pointer-events: auto;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+    
+    color: #ff4444;
+}
+
+.admin-icon:hover {
+    transform: scale(1.12);
+    color: #ff6666;
+    filter: drop-shadow(0 0 8px rgba(255, 50, 50, 0.6));
+}

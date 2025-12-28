@@ -1,0 +1,270 @@
+/* =====================================================
+   AUTH LOGIN – KOMPLETT ISOLIERT
+   Engels811 Network
+   Alle Klassen mit Prefix "auth-" für Zero Conflicts
+===================================================== */
+
+/* ===============================
+   ROOT & BODY RESET
+================================ */
+body.auth-login-page {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    
+    background: #070707;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #ffffff;
+}
+
+/* Variablen für Login */
+body.auth-login-page {
+    --auth-bg: #070707;
+    --auth-card-bg: rgba(18,18,18,0.94);
+    --auth-red: #d60000;
+    --auth-red-glow: rgba(214,0,0,0.6);
+    --auth-red-soft: rgba(214,0,0,0.25);
+    --auth-text: #ffffff;
+    --auth-text-muted: #b8b8d0;
+    --auth-border: rgba(255,255,255,0.08);
+}
+
+/* ===============================
+   MAIN WRAPPER
+================================ */
+.auth-login-main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    
+    background: 
+        radial-gradient(circle at center, rgba(214,0,0,0.18), transparent 65%),
+        #070707;
+}
+
+/* ===============================
+   CONTAINER
+================================ */
+.auth-login-container {
+    width: 100%;
+    max-width: 480px;
+}
+
+/* ===============================
+   TITLE
+================================ */
+.auth-login-title {
+    text-align: center;
+    margin-bottom: 38px;
+    
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    
+    color: var(--auth-red);
+    text-shadow: 0 0 20px var(--auth-red-glow);
+}
+
+.auth-login-title .auth-title-text {
+    color: var(--auth-text);
+    opacity: 0.9;
+}
+
+/* ===============================
+   ERROR BOX
+================================ */
+.auth-error-box {
+    background: rgba(214,0,0,0.15);
+    border: 1px solid var(--auth-red);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    color: #fff;
+}
+
+/* ===============================
+   LOGIN FORM CARD
+================================ */
+.auth-login-form {
+    background: var(--auth-card-bg);
+    padding: 40px 38px 42px;
+    border-radius: 20px;
+    border: 1px solid var(--auth-border);
+    backdrop-filter: blur(6px);
+    
+    box-shadow:
+        0 0 45px rgba(214,0,0,0.25),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
+    
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===============================
+   LABELS
+================================ */
+.auth-form-label {
+    display: block;
+    font-size: 13px;
+    color: var(--auth-text-muted);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+/* ===============================
+   INPUTS
+================================ */
+.auth-form-input {
+    width: 100%;
+    height: 46px;
+    margin-bottom: 18px;
+    padding: 0 14px;
+    
+    background: linear-gradient(180deg, #0c0c0c, #080808);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    
+    color: var(--auth-text);
+    font-size: 14px;
+    
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    transition: all 0.2s ease;
+}
+
+.auth-form-input:focus {
+    outline: none;
+    border-color: var(--auth-red);
+    box-shadow: 0 0 14px var(--auth-red-soft);
+}
+
+.auth-form-input::placeholder {
+    color: rgba(255,255,255,0.3);
+}
+
+/* ===============================
+   PASSWORD WRAPPER
+================================ */
+.auth-password-wrapper {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.auth-password-wrapper .auth-form-input {
+    padding-right: 46px;
+    margin-bottom: 0;
+}
+
+/* ===============================
+   EYE TOGGLE BUTTON
+================================ */
+.auth-toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    
+    background: none;
+    border: none;
+    padding: 0;
+    
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--auth-text-muted);
+    
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.auth-toggle-password:hover {
+    color: var(--auth-red);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Eye Icons */
+.auth-eye-open {
+    display: none;
+}
+
+.auth-toggle-password.show .auth-eye-open {
+    display: inline;
+}
+
+.auth-toggle-password.show .auth-eye-closed {
+    display: none;
+}
+
+/* ===============================
+   REMEMBER ME
+================================ */
+.auth-remember-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0 18px;
+    font-size: 13px;
+    color: var(--auth-text-muted);
+}
+
+.auth-remember-checkbox {
+    width: auto;
+    height: auto;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* ===============================
+   SUBMIT BUTTON
+================================ */
+.auth-submit-btn {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ff1a1a, #b30000);
+    color: #ffffff;
+    
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    text-align: center;
+    
+    cursor: pointer;
+    
+    box-shadow:
+        0 0 30px var(--auth-red-glow),
+        inset 0 0 0 1px rgba(255,255,255,0.18);
+    
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 0 40px var(--auth-red-glow),
+        inset 0 0 0 1px rgba(255,255,255,0.28);
+}
+
+.auth-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+@media (max-width: 520px) {
+    .auth-login-main {
+        padding: 40px 16px;
+    }
+    
+    .auth-login-title {
+        font-size: 30px;
+    }
+    
+    .auth-login-form {
+        padding: 32px 28px 34px;
+    }
+}

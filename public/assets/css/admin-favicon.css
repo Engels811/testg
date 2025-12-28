@@ -1,0 +1,189 @@
+/* =========================================================
+   ADMIN · FAVICON – DANGER ZONE
+   Branding: Engels811 (Dark · Red · Fire)
+========================================================= */
+
+/* ===== TITLES ===== */
+
+.danger-title {
+    margin-bottom: 6px;
+    color: #ff1a1a;
+    font-size: 28px;
+    font-weight: 700;
+    text-shadow: 0 0 14px rgba(255, 26, 26, 0.65);
+}
+
+.danger-sub {
+    margin-bottom: 28px;
+    color: #b5b5b5;
+    font-size: 14px;
+}
+
+/* ===== FORM WRAPPER ===== */
+
+.favicon-form {
+    max-width: 760px;
+    padding: 32px;
+    border-radius: 14px;
+
+    background:
+        radial-gradient(circle at top, #1a0000 0%, #0a0a0a 60%),
+        linear-gradient(180deg, #0c0c0c, #050505);
+
+    border: 1px solid rgba(255, 26, 26, 0.25);
+    box-shadow:
+        0 0 35px rgba(255, 0, 0, 0.18),
+        inset 0 0 25px rgba(255, 0, 0, 0.05);
+}
+
+/* ===== FILE UPLOAD ===== */
+
+.upload-label {
+    display: block;
+    margin-bottom: 18px;
+    color: #ff4d4d;
+    font-size: 14px;
+}
+
+.upload-label span {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.upload-label input[type="file"] {
+    display: block;
+    color: #fff;
+    background: #0f0f0f;
+    border: 1px solid rgba(255, 26, 26, 0.35);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* ===== PREVIEW ZONE ===== */
+
+.favicon-preview-zone {
+    margin: 50px auto 30px;
+    padding: 35px 25px;
+
+    background: radial-gradient(circle at center, #1a0000 0%, #000 70%);
+    border: 2px dashed rgba(255, 26, 26, 0.45);
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    min-height: 240px;
+    box-shadow: inset 0 0 30px rgba(255, 0, 0, 0.15);
+}
+
+/* ===== MAIN ICON ===== */
+
+.favicon-main {
+    margin-bottom: 22px;
+}
+
+.favicon-main img {
+    width: 96px;
+    height: 96px;
+    display: block;
+    margin: 0 auto;
+
+    filter:
+        drop-shadow(0 0 20px rgba(255, 0, 0, 0.9))
+        drop-shadow(0 0 6px rgba(255, 60, 60, 0.8));
+
+    image-rendering: crisp-edges;
+}
+
+/* ===== SIZE SIMULATION ===== */
+
+.favicon-sizes {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.favicon-sizes span {
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #ffffff;
+
+    background: linear-gradient(180deg, #260000, #120000);
+    border: 1px solid rgba(255, 26, 26, 0.55);
+    border-radius: 7px;
+
+    box-shadow:
+        0 0 8px rgba(255, 0, 0, 0.45),
+        inset 0 0 6px rgba(255, 0, 0, 0.25);
+}
+
+/* ===== ACTION BUTTON ===== */
+
+.btn-danger {
+    margin-top: 25px;
+    padding: 14px 26px;
+
+    background: linear-gradient(135deg, #ff1a1a, #b00000);
+    border: none;
+    border-radius: 9px;
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+
+    box-shadow:
+        0 0 22px rgba(255, 0, 0, 0.6),
+        inset 0 0 10px rgba(255, 255, 255, 0.15);
+
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-danger:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+}
+
+.btn-danger:active {
+    transform: translateY(0);
+    filter: brightness(0.95);
+}
+
+/* ===== PAGE ALIGNMENT FIX ===== */
+
+.favicon-form {
+    margin: 40px auto 60px auto; /* horizontal zentriert */
+}
+
+/* =========================================================
+   FIX: OFFSET UNTER FIXED HEADER
+========================================================= */
+
+.admin-dashboard,
+.admin-content,
+body.admin-page {
+    padding-top: 90px; /* Höhe der Navbar */
+}
+
+.danger-title {
+    margin-top: 60px;
+}
+
+.favicon-form {
+    margin-top: 40px;
+}
+
+/* ===== TITLE ALIGNMENT ===== */
+
+.danger-title,
+.danger-sub {
+    text-align: center;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+}

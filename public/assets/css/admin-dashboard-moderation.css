@@ -1,0 +1,153 @@
+/* =====================================================
+   WONDERLIFE – MODERATION DASHBOARD
+   Neon / Dark / Cyber
+===================================================== */
+
+:root {
+    --bg-main: #0b0b0f;
+    --bg-card: rgba(255,255,255,0.04);
+    --bg-card-hover: rgba(255,255,255,0.07);
+
+    --neon-red: #ff3050;
+    --neon-orange: #ff9f1c;
+    --neon-green: #2ecc71;
+    --neon-blue: #4dd0ff;
+
+    --text-main: #ffffff;
+    --text-muted: #9aa0b4;
+
+    --border-soft: rgba(255,255,255,0.08);
+    --glow-red: 0 0 14px rgba(255,48,80,0.55);
+    --glow-green: 0 0 14px rgba(46,204,113,0.55);
+}
+
+/* ===============================
+   GRID
+================================ */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    margin-bottom: 40px;
+}
+
+/* ===============================
+   STAT CARDS
+================================ */
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    transition: all .25s ease;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+}
+
+.stat-card .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: .5px;
+}
+
+.stat-card .stat-value {
+    font-size: 34px;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+/* STATUS COLORS */
+.stat-card.danger {
+    border-color: rgba(255,48,80,.45);
+    box-shadow: var(--glow-red);
+}
+
+.stat-card.warning {
+    border-color: rgba(255,159,28,.45);
+}
+
+.stat-card.success {
+    border-color: rgba(46,204,113,.45);
+    box-shadow: var(--glow-green);
+}
+
+.stat-card.error {
+    border-color: rgba(255,48,80,.55);
+    box-shadow: var(--glow-red);
+}
+
+/* Make whole card clickable */
+.stat-card a {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+}
+
+/* ===============================
+   CHARTS
+================================ */
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.chart-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 18px;
+    padding: 22px;
+}
+
+.chart-card h2 {
+    margin-bottom: 16px;
+    font-size: 18px;
+    color: var(--text-main);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+    .dashboard-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===============================
+   MODERATION DASHBOARD – TITLE FIX
+=============================== */
+
+.admin-dashboard {
+    padding-top: 60px; /* Abstand zum Header */
+}
+
+.admin-dashboard h1,
+.admin-dashboard .page-title,
+.admin-dashboard .section-title {
+    position: relative;
+    z-index: 5;
+
+    margin: 0 0 35px 0;
+    padding-top: 20px;
+
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+
+    color: #ffffff;
+    text-shadow:
+        0 0 10px rgba(255, 50, 50, 0.35),
+        0 0 25px rgba(255, 50, 50, 0.15);
+}
+
+.admin-dashboard,
+.moderations-content,
+main {
+    padding-top: 100px;  /* Höhe des Headers + Puffer */
+}

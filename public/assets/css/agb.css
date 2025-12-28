@@ -1,0 +1,143 @@
+/* =====================================================
+   AGB – Engels811 Brand Style (LESBARKEIT FIX)
+   Überschreibt bewusst globale Kürzungen
+===================================================== */
+
+/* Seite breiter + ruhiger */
+.agb-page {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Karten: KEINE Höhenbegrenzung - Engels811 Farbschema */
+.agb-page .media-card {
+    background: rgba(10, 10, 10, 0.92);
+    border: 1px solid rgba(255, 50, 50, 0.5);
+    border-radius: 18px;
+    padding: 28px 30px;
+    box-shadow: 0 4px 20px rgba(255, 0, 0, 0.15);
+
+    /* WICHTIG */
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Hover-Effekt passend zum Brand */
+.agb-page .media-card:hover {
+    border-color: rgba(255, 50, 50, 0.7);
+    box-shadow: 0 6px 25px rgba(255, 0, 0, 0.25);
+}
+
+/* Überschriften - Engels811 Rot */
+.agb-page .media-card h3 {
+    font-size: 20px;
+    margin-bottom: 14px;
+    color: #ff3232;
+    text-shadow: 0 0 10px rgba(255, 50, 50, 0.3);
+}
+
+/* TEXT – HIER LAG DAS PROBLEM */
+.agb-page .media-card p,
+.agb-page .media-card .text-muted {
+    color: #e8e8e8;
+    font-size: 15px;
+    line-height: 1.75;
+
+    /* ABSOLUT WICHTIG */
+    max-height: none !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    display: block !important;
+
+    /* Clamp / Kürzungen hart deaktivieren */
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
+}
+
+/* Text-Muted speziell anpassen */
+.agb-page .media-card .text-muted {
+    color: #b8b8b8;
+}
+
+/* Mehr Abstand zwischen Paragraphen (AGB-typisch) */
+.agb-page .media-card p + p {
+    margin-top: 14px;
+}
+
+/* Links im AGB-Bereich */
+.agb-page .media-card a {
+    color: #ff4444;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.agb-page .media-card a:hover {
+    color: #ff6666;
+    text-shadow: 0 0 8px rgba(255, 50, 50, 0.4);
+}
+
+/* Mobile Feinschliff */
+@media (max-width: 768px) {
+    .agb-page .media-card {
+        padding: 22px 20px;
+    }
+
+    .agb-page .media-card p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+}
+
+.agb-page * {
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* =====================================================
+   AGB – TEXT UNLIMITED OVERRIDES
+   ===================================================== */
+
+.agb-page .media-card {
+    overflow: visible !important;
+    max-height: none !important;
+}
+
+.agb-page .media-card p,
+.agb-page .media-card .text-muted {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+
+    display: block !important;
+    max-height: none !important;
+
+    /* kill any clamp logic */
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
+}
+
+/* Bessere Lesbarkeit für Rechtstext - Engels811 Brand */
+.agb-page .media-card p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #e8e8e8;
+}
+
+/* Optional: Accent-Elemente */
+.agb-page .media-card strong,
+.agb-page .media-card b {
+    color: #ff5555;
+}
+
+/* Listen-Styling falls benötigt */
+.agb-page .media-card ul,
+.agb-page .media-card ol {
+    color: #e8e8e8;
+    margin-left: 20px;
+}
+
+.agb-page .media-card li {
+    margin-bottom: 8px;
+    line-height: 1.75;
+}

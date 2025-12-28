@@ -1,0 +1,335 @@
+/* =========================================================
+   FORUM – CORE (FINAL)
+========================================================= */
+
+.forum-wrapper {
+    max-width: 1100px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+
+/* =========================================================
+   THREAD / PAGE HEADER
+========================================================= */
+
+.forum-header {
+    max-width: 900px;
+    margin: 0 auto 50px;
+    padding: 32px 40px;
+
+    text-align: center;
+
+    background: linear-gradient(180deg, #0f0f16, #0a0a0f);
+    border: 1px solid rgba(255,26,26,0.35);
+    border-radius: 18px;
+
+    box-shadow: 0 0 40px rgba(255,26,26,0.25);
+}
+
+.forum-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+
+.forum-subtitle {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.forum-breadcrumb {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.forum-breadcrumb a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.forum-breadcrumb span {
+    margin: 0 6px;
+}
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.forum-empty {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 60px 30px;
+
+    background: rgba(20,10,10,0.85);
+    border: 1px dashed rgba(255,26,26,0.5);
+    border-radius: 16px;
+}
+
+.forum-empty h2 {
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.forum-empty p {
+    color: #aaa;
+}
+
+/* =========================================================
+   THREAD LIST
+========================================================= */
+
+.forum-threads {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.forum-thread-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 22px 24px;
+
+    background: rgba(20,10,10,0.85);
+    border: 1px solid rgba(255,26,26,0.3);
+    border-radius: 16px;
+
+    text-decoration: none;
+    color: inherit;
+
+    transition: all 0.25s ease;
+}
+
+.forum-thread-card:hover {
+    background: rgba(255,26,26,0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(255,26,26,0.4);
+}
+
+.forum-thread-title {
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.forum-thread-meta {
+    font-size: 0.8rem;
+    color: #aaa;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.forum-thread-arrow {
+    font-size: 1.3rem;
+    color: var(--primary);
+}
+
+.thread-sticky {
+    margin-left: 8px;
+    font-size: 0.7rem;
+    color: #ffd86b;
+}
+
+.thread-locked {
+    margin-left: 6px;
+    font-size: 0.7rem;
+    color: #ff6b6b;
+}
+
+/* =========================================================
+   POSTS
+========================================================= */
+
+.forum-post {
+    max-width: 900px;
+    margin: 0 auto 24px;
+
+    background: linear-gradient(180deg, #0e0e14, #0a0a0f);
+    border: 1px solid rgba(255,26,26,0.25);
+    border-radius: 18px;
+
+    padding: 24px 26px;
+
+    box-shadow: 0 0 30px rgba(255,26,26,0.15);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.forum-post:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(255,26,26,0.3);
+}
+
+.forum-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 14px;
+
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+.forum-post-content {
+    white-space: pre-line;
+    line-height: 1.65;
+    color: #fff;
+}
+
+/* =========================================================
+   ATTACHMENTS
+========================================================= */
+
+.forum-attachments {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+}
+
+.forum-attachment-wrapper {
+    position: relative;
+}
+
+.forum-attachment {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid rgba(255,26,26,0.35);
+    cursor: zoom-in;
+
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.forum-attachment:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 28px rgba(255,26,26,0.6);
+}
+
+.forum-attachment-video {
+    width: 100%;
+    border-radius: 14px;
+    background: #000;
+    border: 1px solid rgba(255,26,26,0.35);
+}
+
+/* =========================================================
+   REPLY / FORM
+========================================================= */
+
+.forum-reply {
+    max-width: 900px;
+    margin: 70px auto 0;
+
+    padding: 32px 36px;
+
+    background: linear-gradient(180deg, #0f0f16, #0a0a0f);
+    border-radius: 18px;
+    border: 1px solid rgba(255,26,26,0.35);
+
+    box-shadow: 0 0 35px rgba(255,26,26,0.25);
+}
+
+.forum-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.forum-form textarea {
+    min-height: 140px;
+
+    padding: 14px 16px;
+
+    border-radius: 14px;
+    border: 1px solid rgba(255,26,26,0.5);
+
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.forum-btn {
+    align-self: flex-start;
+
+    padding: 10px 20px;
+
+    background: var(--primary);
+    color: #fff;
+
+    border-radius: 999px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: none;
+
+    box-shadow: 0 0 18px rgba(255,26,26,0.5);
+    transition: all .2s ease;
+}
+
+.forum-btn:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 30px rgba(255,26,26,0.7);
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.forum-error {
+    max-width: 900px;
+    margin: 20px auto;
+
+    padding: 16px 18px;
+
+    background: rgba(255,0,0,0.15);
+    border: 1px solid rgba(255,0,0,0.5);
+    border-radius: 14px;
+
+    color: #ff6b6b;
+}
+
+/* =========================================================
+   FORUM LIGHTBOX
+========================================================= */
+
+.forum-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+.forum-lightbox.open {
+    display: flex;
+}
+
+.forum-lightbox-image {
+    max-width: 92vw;
+    max-height: 92vh;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 0 0 1px rgba(255,26,26,0.4),
+        0 0 70px rgba(255,26,26,0.8);
+
+    animation: lightboxZoom .15s ease-out;
+}
+
+@keyframes lightboxZoom {
+    from { transform: scale(.96); opacity: .7; }
+    to   { transform: scale(1); opacity: 1; }
+}

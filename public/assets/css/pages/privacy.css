@@ -1,0 +1,141 @@
+/* =====================================================
+   PRIVACY PAGE – FULLY ISOLATED
+   Namespace: privacy-*
+===================================================== */
+
+.privacy-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 64px 20px 80px;
+    color: #e6e6e6;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.privacy-header {
+    margin-bottom: 48px;
+}
+
+.privacy-center {
+    text-align: center;
+}
+
+.privacy-icon {
+    font-size: 44px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.privacy-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ff1a1a;
+    margin-bottom: 6px;
+}
+
+.privacy-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+}
+
+/* =========================
+   STACK
+========================= */
+
+.privacy-stack {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.privacy-card {
+    background: rgba(14, 10, 12, 0.95);
+    border-radius: 18px;
+    padding: 28px 30px;
+    box-shadow:
+        0 0 0 1px rgba(255, 26, 26, 0.3),
+        0 18px 42px rgba(0,0,0,0.65);
+}
+
+.privacy-card-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.privacy-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+}
+
+.privacy-text-muted {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.7);
+}
+
+/* =========================
+   LIST
+========================= */
+
+.privacy-list {
+    margin-top: 10px;
+    padding-left: 18px;
+}
+
+.privacy-list li {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 6px;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.privacy-wrapper a {
+    color: #ff4d4d;
+    text-decoration: none;
+}
+
+.privacy-wrapper a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.privacy-footer {
+    margin-top: 52px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+    .privacy-title {
+        font-size: 28px;
+    }
+
+    .privacy-card {
+        padding: 22px 20px;
+    }
+}

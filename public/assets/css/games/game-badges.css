@@ -1,0 +1,124 @@
+/* ==================================================
+   GAME BADGES & META
+   Engels811 Network – Dark Crimson Theme
+   Zweck:
+   - Badges (Provider, Top, Rank)
+   - Meta-Informationen
+   - KEINE Layout-Logik
+================================================== */
+
+/* =========================
+   BASE BADGE
+========================= */
+
+.game-badge {
+    position: absolute;
+
+    /* Über Bild & Overlay, unter Admin-Icons */
+    z-index: 5;
+
+    /* Badges dürfen keine Klicks blockieren */
+    pointer-events: none;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    padding: 4px 9px;
+    border-radius: 999px;
+
+    color: #fff;
+    text-transform: uppercase;
+
+    /* hochwertiger Look */
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+}
+
+/* =========================
+   PROVIDER (LINKS OBEN)
+========================= */
+
+.game-badge.provider {
+    top: 14px;
+    left: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #1a0000,
+        #440000
+    );
+    border: 1px solid rgba(255, 50, 50, 0.3);
+}
+
+/* =========================
+   TOP BADGE (RECHTS OBEN)
+========================= */
+
+.game-badge.top {
+    top: 14px;
+    right: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #ff3232,
+        #ff5555
+    );
+    box-shadow: 0 0 15px rgba(255, 50, 50, 0.5);
+}
+
+/* =========================
+   RANK BADGE (OPTIONAL)
+   unter Provider
+========================= */
+
+.game-badge.rank {
+    top: 44px;
+    left: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #cc0000,
+        #ff4444
+    );
+    border: 1px solid rgba(255, 50, 50, 0.4);
+}
+
+/* =========================
+   META INFO (UNTERHALB COVER)
+========================= */
+
+.game-meta {
+    position: relative;
+
+    /* immer über Card-Hintergrund */
+    z-index: 2;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 12px;
+    color: #c8c8c8;
+    opacity: .85;
+    margin-top: 8px;
+}
+
+/* =========================
+   LAST PLAYED
+========================= */
+
+.last-played {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    opacity: .8;
+}
+
+/* Statusfarben – bewusst ruhig */
+.last-played.recent {
+    color: #ff6666;
+}
+
+.last-played.old {
+    color: #888;
+}

@@ -1,0 +1,77 @@
+/* =========================================================
+   PROFILE EXTRAS – UI EXTENSIONS
+========================================================= */
+
+/* Alerts */
+
+.alert-success,
+.alert-error {
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.alert-success {
+    background: rgba(44,255,107,0.15);
+    border: 1px solid rgba(44,255,107,0.4);
+    color: #2cff6b;
+}
+
+.alert-error {
+    background: rgba(255,26,26,0.15);
+    border: 1px solid rgba(255,26,26,0.4);
+    color: #ff1a1a;
+}
+
+/* Avatar Historie */
+
+.avatar-history {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 64px);
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.avatar-thumb {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.avatar-thumb img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,26,26,0.4);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.avatar-thumb:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255,26,26,0.6);
+}
+
+/* Änderungs-Log */
+
+.profile-log {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-log li {
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+}
+
+.profile-log li:last-child {
+    border-bottom: none;
+}
+
+.profile-log small {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}

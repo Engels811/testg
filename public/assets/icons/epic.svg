@@ -1,0 +1,78 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 600 700"
+    width="600"
+    height="700"
+>
+    <defs>
+        <!-- Neon Gradient -->
+        <linearGradient id="neonGradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#a855f7"/>
+            <stop offset="50%" stop-color="#7c3aed"/>
+            <stop offset="100%" stop-color="#22d3ee"/>
+        </linearGradient>
+
+        <!-- Glow -->
+        <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+
+    <!-- Shield Background -->
+    <path
+        d="M120 80
+           Q300 -40 480 80
+           V430
+           Q300 640 120 430
+           Z"
+        fill="#0b0b12"
+        stroke="url(#neonGradient)"
+        stroke-width="10"
+        filter="url(#neonGlow)"
+    />
+
+    <!-- Inner Accent -->
+    <path
+        d="M160 120
+           Q300 10 440 120
+           V410
+           Q300 560 160 410
+           Z"
+        fill="none"
+        stroke="rgba(168,85,247,0.35)"
+        stroke-width="3"
+    />
+
+    <!-- EPIC -->
+    <text
+        x="300"
+        y="300"
+        text-anchor="middle"
+        font-size="120"
+        font-weight="900"
+        letter-spacing="4"
+        fill="url(#neonGradient)"
+        filter="url(#neonGlow)"
+        style="font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;"
+    >
+        EPIC
+    </text>
+
+    <!-- GAMES -->
+    <text
+        x="300"
+        y="370"
+        text-anchor="middle"
+        font-size="48"
+        font-weight="600"
+        letter-spacing="6"
+        fill="#c4b5fd"
+        style="font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;"
+    >
+        GAMES
+    </text>
+</svg>
