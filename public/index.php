@@ -2,12 +2,9 @@
 declare(strict_types=1);
 
 /* =========================================================
-   ERROR REPORTING (ENV-gesteuert)
+   ERROR REPORTING (immer aktiv)
 ========================================================= */
 error_reporting(E_ALL);
-
-$debug = getenv('APP_DEBUG') === 'true';
-ini_set('display_errors', $debug ? '1' : '0');
 
 /* =========================================================
    SESSION (zentral, nur einmal)
@@ -32,6 +29,12 @@ require BASE_PATH . '/app/Core/Autoload.php';
 ========================================================= */
 require BASE_PATH . '/app/Core/Env.php';
 Env::load(BASE_PATH . '/.env');
+
+/* =========================================================
+   DEBUG NACH ENV
+========================================================= */
+$debug = ($_ENV['APP_DEBUG'] ?? 'false') === 'true';
+ini_set('display_errors', $debug ? '1' : '0');
 
 /* =========================================================
    🔄 AUTO-IMPORTER (SILENT / NON-BLOCKING)
