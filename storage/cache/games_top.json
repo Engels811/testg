@@ -1,0 +1,80 @@
+{
+    "status": "success",
+    "count": 6,
+    "data": [
+        {
+            "id": 16,
+            "name": "FiveM",
+            "slug": "fivem",
+            "provider": "custom",
+            "provider_id": null,
+            "hours": "3916.0",
+            "cover": "https:\/\/i.ibb.co\/6JqqF6C3\/Chat-GPT-Image-22-Dez-2025-21-02-44.png",
+            "last_played": null,
+            "is_top": 1,
+            "is_live": 0
+        },
+        {
+            "id": 5,
+            "name": "Satisfactory",
+            "slug": "satisfactory",
+            "provider": "steam",
+            "provider_id": "526870",
+            "hours": "292.9",
+            "cover": "https:\/\/cdn.cloudflare.steamstatic.com\/steam\/apps\/526870\/header.jpg",
+            "last_played": "2025-04-27 01:54:03",
+            "is_top": 1,
+            "is_live": 0
+        },
+        {
+            "id": 4,
+            "name": "ARK: Survival Evolved",
+            "slug": "ark-survival-evolved",
+            "provider": "steam",
+            "provider_id": "346110",
+            "hours": "255.2",
+            "cover": "https:\/\/cdn.cloudflare.steamstatic.com\/steam\/apps\/346110\/header.jpg",
+            "last_played": "2024-01-02 23:44:12",
+            "is_top": 1,
+            "is_live": 0
+        },
+        {
+            "id": 13,
+            "name": "Once Human",
+            "slug": "once-human",
+            "provider": "steam",
+            "provider_id": "2139460",
+            "hours": "99.6",
+            "cover": "https:\/\/cdn.cloudflare.steamstatic.com\/steam\/apps\/2139460\/header.jpg",
+            "last_played": "2025-04-10 15:09:12",
+            "is_top": 1,
+            "is_live": 0
+        },
+        {
+            "id": 12,
+            "name": "Bellwright",
+            "slug": "bellwright",
+            "provider": "steam",
+            "provider_id": "1812450",
+            "hours": "55.8",
+            "cover": "https:\/\/cdn.cloudflare.steamstatic.com\/steam\/apps\/1812450\/header.jpg",
+            "last_played": "2024-05-16 23:46:44",
+            "is_top": 1,
+            "is_live": 0
+        },
+        {
+            "id": 7,
+            "name": "PUBG: BATTLEGROUNDS",
+            "slug": "pubg-battlegrounds",
+            "provider": "steam",
+            "provider_id": "578080",
+            "hours": "43.3",
+            "cover": "https:\/\/cdn.cloudflare.steamstatic.com\/steam\/apps\/578080\/header.jpg",
+            "last_played": "2025-12-22 14:42:24",
+            "is_top": 1,
+            "is_live": 0
+        }
+    ],
+    "cached": true,
+    "ttl": 300
+}
