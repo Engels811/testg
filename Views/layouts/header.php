@@ -1,21 +1,22 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Engels811 Network – Global Header
- * RBAC-clean (role_level)
- * Live-Status wird per JavaScript aus /api/twitch-status.php geladen
+ * RBAC-clean (role / role_level)
+ * Live-Status wird per JavaScript geladen
  */
-?>
 
-<!-- FAVICON (CACHE-BUST) -->
-<link rel="icon"
-      href="/favicon.ico?v=<?= htmlspecialchars(FaviconService::getVersion()) ?>"
-      type="image/x-icon">
+$user        = $_SESSION['user'] ?? null;
+$roleLevel   = (int)($user['role_level'] ?? 0);
+$currentPage = $currentPage ?? '';
+?>
 
 <header class="site-header">
     <div class="header-inner">
 
         <!-- =========================
-         BRAND (LOGO)
+             BRAND (LOGO)
         ========================= -->
         <div class="brand">
             <a href="/" class="brand-logo-link" aria-label="Engels811 Network – Home">
@@ -27,34 +28,34 @@
         </div>
 
         <!-- =========================
-         DESKTOP NAV
+             DESKTOP NAV
         ========================= -->
         <nav class="main-nav">
-            <a href="/" class="<?= ($currentPage ?? '') === 'home' ? 'active' : '' ?>">Home</a>
-            <a href="/games" class="<?= ($currentPage ?? '') === 'games' ? 'active' : '' ?>">Games</a>
-            <a href="/forum" class="<?= ($currentPage ?? '') === 'forum' ? 'active' : '' ?>">Forum</a>
-            <a href="/galerie" class="<?= ($currentPage ?? '') === 'galerie' ? 'active' : '' ?>">Galerie</a>
-            <a href="/videos" class="<?= ($currentPage ?? '') === 'videos' ? 'active' : '' ?>">Videos</a>
-            <a href="/playlisten" class="<?= ($currentPage ?? '') === 'playlisten' ? 'active' : '' ?>">Playlisten</a>
-            <a href="/hardware" class="<?= ($currentPage ?? '') === 'hardware' ? 'active' : '' ?>">Hardware</a>
-            <a href="/partner" class="<?= ($currentPage ?? '') === 'partner' ? 'active' : '' ?>">Partner</a>
-            <a href="/live" class="<?= ($currentPage ?? '') === 'live' ? 'active' : '' ?>">Live</a>
-            <a href="/about" class="<?= ($currentPage ?? '') === 'about' ? 'active' : '' ?>">About</a>
+            <a href="/"           class="<?= $currentPage === 'home' ? 'active' : '' ?>">Home</a>
+            <a href="/games"      class="<?= $currentPage === 'games' ? 'active' : '' ?>">Games</a>
+            <a href="/forum"      class="<?= $currentPage === 'forum' ? 'active' : '' ?>">Forum</a>
+            <a href="/galerie"    class="<?= $currentPage === 'galerie' ? 'active' : '' ?>">Galerie</a>
+            <a href="/videos"     class="<?= $currentPage === 'videos' ? 'active' : '' ?>">Videos</a>
+            <a href="/playlisten" class="<?= $currentPage === 'playlisten' ? 'active' : '' ?>">Playlisten</a>
+            <a href="/hardware"   class="<?= $currentPage === 'hardware' ? 'active' : '' ?>">Hardware</a>
+            <a href="/partner"    class="<?= $currentPage === 'partner' ? 'active' : '' ?>">Partner</a>
+            <a href="/live"       class="<?= $currentPage === 'live' ? 'active' : '' ?>">Live</a>
+            <a href="/about"      class="<?= $currentPage === 'about' ? 'active' : '' ?>">About</a>
 
-            <!-- ADMIN / MODERATOR (RBAC) -->
-            <?php if (!empty($_SESSION['user']['role_level']) && $_SESSION['user']['role_level'] >= 50): ?>
-                <a href="/admin" class="<?= ($currentPage ?? '') === 'admin' ? 'active' : '' ?>">
+            <!-- ADMIN / TEAM -->
+            <?php if ($roleLevel >= 50): ?>
+                <a href="/admin" class="<?= $currentPage === 'admin' ? 'active' : '' ?>">
                     Admin
                 </a>
             <?php endif; ?>
         </nav>
 
         <!-- =========================
-         RIGHT SIDE
+             RIGHT SIDE
         ========================= -->
         <div class="header-actions">
 
-            <!-- LIVE BADGE (JS) -->
+            <!-- LIVE BADGE (JS gesteuert) -->
             <a href="/live"
                class="live-badge"
                id="liveBadge"
@@ -63,9 +64,8 @@
             </a>
 
             <!-- AUTH -->
-            <?php if (!empty($_SESSION['user'])): ?>
+            <?php if ($user): ?>
 
-                <!-- LOGOUT -->
                 <form method="post" action="/logout" class="logout-form">
                     <?= Security::csrfField() ?>
                     <button type="submit" class="btn btn-secondary small btn-logout">
@@ -75,13 +75,8 @@
 
             <?php else: ?>
 
-                <a href="/login" class="btn btn-secondary small">
-                    Login
-                </a>
-
-                <a href="/register" class="btn btn-primary small">
-                    Registrieren
-                </a>
+                <a href="/login" class="btn btn-secondary small">Login</a>
+                <a href="/register" class="btn btn-primary small">Registrieren</a>
 
             <?php endif; ?>
 
@@ -96,7 +91,7 @@
     </div>
 
     <!-- =========================
-     MOBILE NAV
+         MOBILE NAV
     ========================= -->
     <div class="mobile-nav" id="mobileNav">
         <a href="/">Home</a>
@@ -110,14 +105,12 @@
         <a href="/live">Live</a>
         <a href="/about">About</a>
 
-        <!-- ADMIN / MODERATOR (RBAC) -->
-        <?php if (!empty($_SESSION['user']['role_level']) && $_SESSION['user']['role_level'] >= 50): ?>
+        <?php if ($roleLevel >= 50): ?>
             <a href="/admin">Admin</a>
         <?php endif; ?>
 
-        <?php if (!empty($_SESSION['user'])): ?>
+        <?php if ($user): ?>
 
-            <!-- MOBILE LOGOUT -->
             <form method="post" action="/logout" class="logout-form mobile-logout">
                 <?= Security::csrfField() ?>
                 <button type="submit" class="mobile-link">

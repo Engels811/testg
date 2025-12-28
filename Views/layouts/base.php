@@ -5,15 +5,15 @@ declare(strict_types=1);
  * Base Layout
  *
  * Erwartete Variablen:
- * @var string $title
- * @var string $pageDescription
- * @var string $content
+ * @var string|null $title
+ * @var string|null $pageDescription
+ * @var string      $content
  */
 
-$title = $title ?? 'Engels811 Network';
+$title           = $title ?? 'Engels811 Network';
 $pageDescription = $pageDescription ?? '';
+$uri             = $_SERVER['REQUEST_URI'] ?? '';
 ?>
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -27,7 +27,7 @@ $pageDescription = $pageDescription ?? '';
     <!-- =========================
          GLOBAL LIBS
     ========================= -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
 
     <!-- =========================
          GLOBAL STYLES
@@ -40,9 +40,9 @@ $pageDescription = $pageDescription ?? '';
     <link rel="stylesheet" href="/assets/css/brand-logo.css">
 
     <!-- =========================
-         FORUM STYLES (nur wenn nötig)
+         FORUM STYLES (conditional)
     ========================= -->
-    <?php if (str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/forum')): ?>
+    <?php if (str_starts_with($uri, '/forum')): ?>
         <link rel="stylesheet" href="/assets/css/forum/forum.css">
     <?php endif; ?>
 
@@ -61,7 +61,7 @@ $pageDescription = $pageDescription ?? '';
 ========================= */
 $bodyClasses = [];
 
-if (str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/forum')) {
+if (str_starts_with($uri, '/forum')) {
     $bodyClasses[] = 'forum-page';
 }
 ?>
@@ -87,7 +87,7 @@ require BASE_PATH . '/app/Views/partials/live-banner.php';
 ========================= -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const burger = document.getElementById('burgerBtn');
+    const burger    = document.getElementById('burgerBtn');
     const mobileNav = document.getElementById('mobileNav');
 
     if (burger && mobileNav) {

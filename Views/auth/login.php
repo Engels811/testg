@@ -7,7 +7,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title><?= $title ?? 'Login' ?></title>
+    <title><?= htmlspecialchars($title ?? 'Login', ENT_QUOTES, 'UTF-8') ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- NUR Login CSS laden -->
@@ -29,18 +29,24 @@
         <?php if (!empty($error)): ?>
             <div class="auth-error-box">
                 <?php
-                // HTML nur erlauben, wenn es ein interner System-Fehler ist
-                if (str_contains($error, '<a ')) {
+                // HTML nur erlauben, wenn explizit beabsichtigt
+                if (is_string($error) && str_contains($error, '<a ')) {
                     echo $error;
                 } else {
-                    echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8');
+                    echo htmlspecialchars((string)$error, ENT_QUOTES, 'UTF-8');
                 }
                 ?>
             </div>
         <?php endif; ?>
 
         <!-- LOGIN FORM -->
-        <form method="post" class="auth-login-form" autocomplete="on" id="loginForm">
+        <form method="post"
+              class="auth-login-form"
+              autocomplete="on"
+              id="loginForm">
+
+            <!-- CSRF -->
+            <?= csrf_field() ?>
 
             <!-- EMAIL / USERNAME -->
             <label for="login" class="auth-form-label">
@@ -84,11 +90,11 @@
                 </button>
             </div>
 
-            <!-- REMEMBER ME -->
+            <!-- REMEMBER DEVICE -->
             <label class="auth-remember-row">
                 <input
                     type="checkbox"
-                    name="remember"
+                    name="remember_device"
                     value="1"
                     class="auth-remember-checkbox"
                 >
@@ -115,16 +121,16 @@
 
 <!-- PASSWORD TOGGLE SCRIPT -->
 <script>
-(function() {
+(function () {
     const btn = document.getElementById('togglePassword');
     const input = document.getElementById('password');
 
     if (!btn || !input) return;
 
-    btn.addEventListener('click', function() {
-        const isHidden = input.type === 'password';
-        input.type = isHidden ? 'text' : 'password';
-        btn.classList.toggle('show', isHidden);
+    btn.addEventListener('click', function () {
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.classList.toggle('show', show);
     });
 })();
 </script>
