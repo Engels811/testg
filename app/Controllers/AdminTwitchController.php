@@ -1,19 +1,61 @@
 <?php
+declare(strict_types=1);
 
 class AdminTwitchController
 {
     public function index(): void
     {
-        $logs = Database::fetchAll(
-            "SELECT *
-             FROM twitch_import_logs
-             ORDER BY created_at DESC
-             LIMIT 50"
-        );
+        Security::requireAdmin();
+
+        $vods = Database::fetchAll(
+            "SELECT * FROM twitch_vods ORDER BY created_at DESC LIMIT 50"
+        ) ?? [];
 
         View::render('admin/twitch/index', [
-            'title' => 'Twitch Import Logs',
-            'logs'  => $logs
+            'title' => 'Twitch VODs',
+            'vods'  => $vods
         ]);
+    }
+
+    public function sync(): void
+    {
+        Security::requireAdmin();
+
+        if (!class_exists('TwitchService')) {
+            $_SESSION['flash_error'] = 'TwitchService nicht verfügbar.';
+            header('Location: /admin/twitch');
+            exit;
+        }
+
+        try {
+            TwitchService::syncVods();
+            $_SESSION['flash_success'] = 'VODs wurden synchronisiert.';
+        } catch (Exception $e) {
+            $_SESSION['flash_error'] = 'Fehler: ' . $e->getMessage();
+        }
+
+        header('Location: /admin/twitch');
+        exit;
+    }
+
+    public function delete(): void
+    {
+        Security::requireAdmin();
+        Security::checkCsrf();
+
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            http_response_code(400);
+            exit;
+        }
+
+        Database::execute(
+            "DELETE FROM twitch_vods WHERE id = ?",
+            [$id]
+        );
+
+        $_SESSION['flash_success'] = 'VOD wurde gelöscht.';
+        header('Location: /admin/twitch');
+        exit;
     }
 }

@@ -61,11 +61,9 @@ class AdminFaviconController
             $this->redirectBack();
         }
 
-        // Zielpfad
         $target = BASE_PATH . '/public/favicon.png';
 
-        // 64×64 erzeugen
-        $size = 64;
+        $size   = 64;
         $canvas = imagecreatetruecolor($size, $size);
 
         imagealphablending($canvas, false);
@@ -85,7 +83,6 @@ class AdminFaviconController
         imagedestroy($img);
         imagedestroy($canvas);
 
-        // Cache-Bust / Versionierung
         if (class_exists('FaviconService')) {
             FaviconService::bumpVersion();
         }

@@ -3,61 +3,70 @@ declare(strict_types=1);
 
 class AdminPermissionsController
 {
-    private function guard(): void
-    {
-        if (
-            empty($_SESSION['user']) ||
-            !Permission::has('admin.permissions.manage')
-        ) {
-            http_response_code(403);
-            View::render('errors/403');
-            exit;
-        }
-    }
-
     public function index(): void
     {
-        $this->guard();
+        Security::requireSuperadmin();
 
         $permissions = Database::fetchAll(
-            'SELECT * FROM permissions ORDER BY key_name'
-        );
+            "SELECT * FROM permissions ORDER BY resource, action"
+        ) ?? [];
 
         View::render('admin/permissions/index', [
-            'title' => 'Permissions',
+            'title'       => 'Berechtigungen',
             'permissions' => $permissions
         ]);
     }
 
-    public function store(): void
+    public function assign(): void
     {
-        $this->guard();
-        Security::checkCsrf();
+        Security::requireSuperadmin();
 
-        Database::execute(
-            'INSERT INTO permissions (key_name, description)
-             VALUES (?, ?)',
-            [
-                trim($_POST['key_name']),
-                trim($_POST['description'] ?? '')
-            ]
-        );
+        $roles = Database::fetchAll(
+            "SELECT * FROM roles ORDER BY level DESC"
+        ) ?? [];
 
-        header('Location: /admin/permissions');
-        exit;
+        $permissions = Database::fetchAll(
+            "SELECT * FROM permissions ORDER BY resource, action"
+        ) ?? [];
+
+        $assignments = Database::fetchAll(
+            "SELECT * FROM role_permissions"
+        ) ?? [];
+
+        $map = [];
+        foreach ($assignments as $a) {
+            $map[$a['role_id'] . '_' . $a['permission_id']] = true;
+        }
+
+        View::render('admin/permissions/assign', [
+            'title'       => 'Berechtigungen zuweisen',
+            'roles'       => $roles,
+            'permissions' => $permissions,
+            'map'         => $map
+        ]);
     }
 
-    public function delete(): void
+    public function saveAssignments(): void
     {
-        $this->guard();
+        Security::requireSuperadmin();
         Security::checkCsrf();
 
-        Database::execute(
-            'DELETE FROM permissions WHERE id = ?',
-            [(int)$_POST['id']]
-        );
+        Database::execute("DELETE FROM role_permissions");
 
-        header('Location: /admin/permissions');
+        $assignments = $_POST['assignments'] ?? [];
+
+        foreach ($assignments as $assignment) {
+            [$roleId, $permissionId] = explode('_', $assignment);
+
+            Database::execute(
+                "INSERT INTO role_permissions (role_id, permission_id)
+                 VALUES (?, ?)",
+                [(int)$roleId, (int)$permissionId]
+            );
+        }
+
+        $_SESSION['flash_success'] = 'Berechtigungen wurden gespeichert.';
+        header('Location: /admin/permissions/assign');
         exit;
     }
 }

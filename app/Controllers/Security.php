@@ -1,10 +1,40 @@
 <?php
 declare(strict_types=1);
 
-class Security
+final class Security
 {
     /* =========================================================
-       AUTH GUARDS (RBAC-KONFORM)
+       ROLLEN-DEFINITIONEN
+    ========================================================= */
+
+    private const TEAM_ROLES = [
+        'support',
+        'moderator',
+        'admin',
+        'superadmin',
+        'owner',
+    ];
+
+    private const ADMIN_ROLES = [
+        'admin',
+        'superadmin',
+        'owner',
+    ];
+
+    private const MODERATOR_ROLES = [
+        'moderator',
+        'admin',
+        'superadmin',
+        'owner',
+    ];
+
+    private const SUPERADMIN_ROLES = [
+        'superadmin',
+        'owner',
+    ];
+
+    /* =========================================================
+       AUTH
     ========================================================= */
 
     public static function requireAuth(): void
@@ -15,41 +45,26 @@ class Security
         }
     }
 
-    /**
-     * Admin-Bereich
-     * role_level >= 100
-     */
-    public static function requireAdmin(): void
-    {
-        self::requireAuth();
-
-        if (
-            !isset($_SESSION['user']['role_level'])
-            || $_SESSION['user']['role_level'] < 100
-        ) {
-            self::forbidden();
-        }
-    }
-
-    /**
-     * Team-Bereich (Moderator + Admin)
-     * role_level >= 50
-     */
     public static function requireTeam(): void
     {
-        self::requireAuth();
-
-        if (
-            !isset($_SESSION['user']['role_level'])
-            || $_SESSION['user']['role_level'] < 50
-        ) {
-            self::forbidden();
-        }
+        self::requireRole(self::TEAM_ROLES);
     }
 
-    /**
-     * Owner (hart, nur User-ID 1)
-     */
+    public static function requireAdmin(): void
+    {
+        self::requireRole(self::ADMIN_ROLES);
+    }
+
+    public static function requireModerator(): void
+    {
+        self::requireRole(self::MODERATOR_ROLES);
+    }
+
+    public static function requireSuperadmin(): void
+    {
+        self::requireRole(self::SUPERADMIN_ROLES);
+    }
+
     public static function requireOwner(): void
     {
         self::requireAuth();
@@ -60,7 +75,22 @@ class Security
     }
 
     /* =========================================================
-       CSRF – SINGLE SOURCE OF TRUTH
+       ROLE CHECK (INTERN)
+    ========================================================= */
+
+    private static function requireRole(array $allowedRoles): void
+    {
+        self::requireAuth();
+
+        $role = $_SESSION['user']['role'] ?? null;
+
+        if (!$role || !in_array($role, $allowedRoles, true)) {
+            self::forbidden();
+        }
+    }
+
+    /* =========================================================
+       CSRF
     ========================================================= */
 
     public static function csrf(): string
@@ -86,29 +116,28 @@ class Security
         $token = $_POST['csrf'] ?? '';
 
         if (
-            empty($_SESSION['_csrf'])
-            || !hash_equals($_SESSION['_csrf'], $token)
+            empty($_SESSION['_csrf']) ||
+            !hash_equals($_SESSION['_csrf'], $token)
         ) {
             http_response_code(419);
             View::render('errors/419', [
-                'title' => 'Sicherheitsüberprüfung fehlgeschlagen'
+                'title' => 'Sicherheitsüberprüfung fehlgeschlagen',
             ]);
             exit;
         }
 
-        // Einmal-Token
         unset($_SESSION['_csrf']);
     }
 
     /* =========================================================
-       INTERNAL
+       FORBIDDEN
     ========================================================= */
 
     private static function forbidden(): void
     {
         http_response_code(403);
         View::render('errors/403', [
-            'title' => 'Zugriff verweigert'
+            'title' => 'Zugriff verweigert',
         ]);
         exit;
     }

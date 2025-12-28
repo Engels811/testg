@@ -9,21 +9,22 @@ class AuthController
     public function login(): void
     {
         $error = null;
-        $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-        $ua = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $login    = trim($_POST['login'] ?? '');
-            $password = $_POST['password'] ?? '';
-            $rememberDevice = !empty($_POST['remember_device']);
+            $login          = trim($_POST['login'] ?? '');
+            $password       = $_POST['password'] ?? '';
+            $rememberDevice = isset($_POST['remember_device']);
+
+            $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+            $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
             if ($login === '' || $password === '') {
                 $error = 'Bitte alle Felder ausfüllen.';
             } else {
 
                 /* =========================================
-                   USER + ROLLE LADEN (RBAC – FIXED)
+                   USER + ROLLE LADEN
                 ========================================= */
                 $sql = filter_var($login, FILTER_VALIDATE_EMAIL)
                     ? '
@@ -56,10 +57,10 @@ class AuthController
                 } else {
 
                     /* =========================================
-                       LOGIN HISTORY / DEVICE
+                       LOGIN-HISTORY / DEVICE
                     ========================================= */
-                    $ipHash = hash('sha256', $ip . env('APP_KEY'));
-                    $uaHash = hash('sha256', $ua);
+                    $ipHash     = hash('sha256', $ip . env('APP_KEY'));
+                    $uaHash     = hash('sha256', $ua);
                     $deviceHash = hash('sha256', $ipHash . $uaHash);
 
                     Database::execute(
@@ -68,7 +69,7 @@ class AuthController
                         [$user['id'], $ipHash, $uaHash]
                     );
 
-                    $recent = Database::fetchColumn(
+                    $recent = (int)Database::fetchColumn(
                         'SELECT COUNT(*)
                          FROM login_history
                          WHERE user_id = ?
@@ -76,7 +77,7 @@ class AuthController
                         [$user['id']]
                     );
 
-                    if ((int)$recent >= 3) {
+                    if ($recent >= 3) {
 
                         $token = bin2hex(random_bytes(32));
 
@@ -99,7 +100,7 @@ class AuthController
                     } else {
 
                         /* =========================================
-                           SESSION (RBAC-SAUBER)
+                           SESSION (RBAC – FINAL)
                         ========================================= */
                         session_regenerate_id(true);
 
@@ -107,6 +108,7 @@ class AuthController
                             'id'         => (int)$user['id'],
                             'username'   => $user['username'],
                             'email'      => $user['email'],
+                            'role'       => $user['role'],       // String-Rolle
                             'role_id'    => (int)$user['role_id'],
                             'role_name'  => $user['role_name'],
                             'role_level' => (int)$user['role_level'],
@@ -130,9 +132,9 @@ class AuthController
                         );
 
                         /* =========================================
-                           REDIRECT (PERMISSION-BASIERT)
+                           REDIRECT (RBAC / PERMISSION)
                         ========================================= */
-                        if (Permission::has('admin.access')) {
+                        if (in_array($user['role'], ['support', 'moderator', 'admin', 'superadmin', 'owner'], true)) {
                             header('Location: /admin');
                         } else {
                             header('Location: /dashboard');

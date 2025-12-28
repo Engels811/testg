@@ -3,48 +3,15 @@ declare(strict_types=1);
 
 class AdminGamesController
 {
-    /* =========================================================
-       ACCESS GUARD (PERMISSION-BASIERT)
-    ========================================================= */
-
-    private function guard(string $permission): void
-    {
-        if (
-            empty($_SESSION['user']) ||
-            !Permission::has($permission)
-        ) {
-            http_response_code(403);
-            View::render('errors/403', [
-                'title' => 'Zugriff verweigert'
-            ]);
-            exit;
-        }
-    }
-
-    /**
-     * GET /admin/games
-     * Übersicht & Verwaltung aller Spiele
-     */
     public function index(): void
     {
-        $this->guard('admin.games.manage');
+        Security::requireAdmin();
 
         $games = Database::fetchAll(
             "SELECT
-                id,
-                name,
-                slug,
-                provider,
-                provider_id,
-                category,
-                hours,
-                hours_override,
-                cover,
-                is_top,
-                confirmed,
-                last_played,
-                created_at,
-                updated_at
+                id, name, slug, provider, provider_id, category,
+                hours, hours_override, cover, is_top, confirmed,
+                last_played, created_at, updated_at
              FROM games
              ORDER BY
                 is_top DESC,
@@ -62,12 +29,9 @@ class AdminGamesController
         );
     }
 
-    /**
-     * GET /admin/games/edit/{id}
-     */
     public function edit(int $id): void
     {
-        $this->guard('admin.games.manage');
+        Security::requireAdmin();
 
         $game = Database::fetch(
             "SELECT * FROM games WHERE id = ?",
@@ -98,12 +62,9 @@ class AdminGamesController
         );
     }
 
-    /**
-     * POST /admin/games/update
-     */
     public function update(): void
     {
-        $this->guard('admin.games.manage');
+        Security::requireAdmin();
         Security::checkCsrf();
 
         $id = (int)($_POST['id'] ?? 0);
@@ -149,13 +110,9 @@ class AdminGamesController
         exit;
     }
 
-    /**
-     * POST /admin/games/toggle
-     * AJAX Toggle: confirmed / is_top
-     */
     public function toggle(): void
     {
-        $this->guard('admin.games.manage');
+        Security::requireAdmin();
         Security::checkCsrf();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -179,7 +136,6 @@ class AdminGamesController
             [$id]
         );
 
-        // Frontend erwartet 204 (No Content)
         http_response_code(204);
         exit;
     }

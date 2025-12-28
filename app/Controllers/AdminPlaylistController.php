@@ -1,80 +1,50 @@
 <?php
+declare(strict_types=1);
 
 class AdminPlaylistController
 {
     public function index(): void
     {
-        Security::requireAuth();
+        Security::requireAdmin();
 
         $playlists = Database::fetchAll(
-            "SELECT * FROM playlists ORDER BY sort_order ASC, created_at DESC"
-        );
+            "SELECT
+                p.*,
+                u.username,
+                (SELECT COUNT(*) FROM playlist_videos WHERE playlist_id = p.id) AS video_count
+             FROM playlists p
+             LEFT JOIN users u ON u.id = p.user_id
+             ORDER BY p.created_at DESC"
+        ) ?? [];
 
         View::render('admin/playlists/index', [
-            'title'     => 'Playlisten verwalten',
+            'title'     => 'Playlists',
             'playlists' => $playlists
         ]);
     }
 
-    public function create(): void
-    {
-        Security::requireAuth();
-
-        View::render('admin/playlists/create', [
-            'title' => 'Playlist hinzufügen'
-        ]);
-    }
-
-    public function store(): void
-    {
-        Security::requireAuth();
-        Security::checkCsrf();
-
-        Database::execute(
-            "INSERT INTO playlists
-            (title, description, platform, embed_url, category, sort_order, is_active)
-            VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [
-                trim($_POST['title']),
-                trim($_POST['description']),
-                $_POST['platform'],
-                trim($_POST['embed_url']),
-                $_POST['category'] ?? 'general',
-                (int)$_POST['sort_order'],
-                isset($_POST['is_active']) ? 1 : 0
-            ]
-        );
-
-        header('Location: /admin/playlists');
-        exit;
-    }
-
-    public function toggle(): void
-    {
-        Security::requireAuth();
-        Security::checkCsrf();
-
-        Database::execute(
-            "UPDATE playlists
-             SET is_active = 1 - is_active
-             WHERE id = ?",
-            [(int)$_POST['id']]
-        );
-
-        header('Location: /admin/playlists');
-        exit;
-    }
-
     public function delete(): void
     {
-        Security::requireAuth();
+        Security::requireAdmin();
         Security::checkCsrf();
+
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            http_response_code(400);
+            exit;
+        }
+
+        Database::execute(
+            "DELETE FROM playlist_videos WHERE playlist_id = ?",
+            [$id]
+        );
 
         Database::execute(
             "DELETE FROM playlists WHERE id = ?",
-            [(int)$_POST['id']]
+            [$id]
         );
 
+        $_SESSION['flash_success'] = 'Playlist wurde gelöscht.';
         header('Location: /admin/playlists');
         exit;
     }

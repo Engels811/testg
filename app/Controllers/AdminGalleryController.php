@@ -10,31 +10,9 @@ class AdminGalleryController
         $this->model = new GalleryModel();
     }
 
-    /* =========================================================
-       ACCESS GUARD (PERMISSION-BASIERT)
-    ========================================================= */
-
-    private function guard(string $permission): void
-    {
-        if (
-            empty($_SESSION['user']) ||
-            !Permission::has($permission)
-        ) {
-            http_response_code(403);
-            View::render('errors/403', [
-                'title' => 'Zugriff verweigert'
-            ]);
-            exit;
-        }
-    }
-
-    /* =========================================================
-       INDEX – GALERIE
-    ========================================================= */
-
     public function index(): void
     {
-        $this->guard('admin.gallery.manage');
+        Security::requireAdmin();
 
         $images = $this->model->getAll() ?? [];
 

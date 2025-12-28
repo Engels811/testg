@@ -3,120 +3,215 @@ declare(strict_types=1);
 
 class AdminModerationController
 {
-    /* =========================================================
-       ACCESS GUARD (PERMISSION-BASIERT)
-    ========================================================= */
-
-    private function guard(string $permission): void
-    {
-        if (
-            empty($_SESSION['user']) ||
-            !Permission::has($permission)
-        ) {
-            http_response_code(403);
-            View::render('errors/403', [
-                'title' => 'Zugriff verweigert'
-            ]);
-            exit;
-        }
-    }
-
-    /**
-     * GET /admin/moderation
-     * Moderations-Dashboard (Statistiken)
-     */
     public function index(): void
     {
-        $this->guard('admin.moderation.view');
+        Security::requireModerator();
 
-        $openReports = (int) Database::fetchValue(
-            "SELECT COUNT(*) FROM reports WHERE status = 'open'"
-        );
+        $stats = [
+            'total_bans'    => (int)Database::fetchColumn(
+                "SELECT COUNT(*) FROM user_actions WHERE action_type = 'ban' AND active = 1"
+            ),
+            'total_mutes'   => (int)Database::fetchColumn(
+                "SELECT COUNT(*) FROM user_actions WHERE action_type = 'mute' AND active = 1"
+            ),
+            'total_warns'   => (int)Database::fetchColumn(
+                "SELECT COUNT(*) FROM user_actions WHERE action_type = 'warn'"
+            ),
+            'open_reports'  => (int)Database::fetchColumn(
+                "SELECT COUNT(*) FROM reports WHERE status = 'open'"
+            ),
+            'open_appeals'  => (int)Database::fetchColumn(
+                "SELECT COUNT(*) FROM user_appeals WHERE status = 'open'"
+            )
+        ];
 
-        $openAppeals = (int) Database::fetchValue(
-            "SELECT COUNT(*) FROM user_appeals WHERE status = 'open'"
-        );
-
-        $reportsPerDay = Database::fetchAll(
-            "SELECT 
-                DATE(created_at) AS day,
-                COUNT(*) AS count
-             FROM reports
-             WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 14 DAY)
-             GROUP BY day
-             ORDER BY day ASC"
+        $recentActions = Database::fetchAll(
+            "SELECT ua.*, u.username
+             FROM user_actions ua
+             LEFT JOIN users u ON u.id = ua.user_id
+             ORDER BY ua.created_at DESC
+             LIMIT 20"
         ) ?? [];
-
-        $modActions = Database::fetchAll(
-            "SELECT 
-                u.username AS moderator,
-                COUNT(*) AS count
-             FROM reports r
-             JOIN users u ON u.id = r.resolved_by
-             WHERE r.resolved_by IS NOT NULL
-             GROUP BY r.resolved_by
-             ORDER BY count DESC"
-        ) ?? [];
-
-        $cronStatus = Database::fetch(
-            "SELECT *
-             FROM cron_logs
-             WHERE job = 'moderation_cleanup'
-             ORDER BY created_at DESC
-             LIMIT 1"
-        );
 
         View::render('admin/moderation/index', [
-            'title'         => 'Moderation',
-            'reportsPerDay' => $reportsPerDay,
-            'modActions'    => $modActions,
-            'openReports'   => $openReports,
-            'openAppeals'   => $openAppeals,
-            'cronStatus'    => $cronStatus
+            'title'   => 'Moderation',
+            'stats'   => $stats,
+            'actions' => $recentActions
         ]);
     }
 
-    /**
-     * GET /admin/moderation/panel
-     * Inhalte & Logs
-     */
-    public function panel(): void
+    public function actions(): void
     {
-        $this->guard('admin.moderation.manage');
+        Security::requireModerator();
 
-        // 🔴 Ausgeblendete Forum-Beiträge (Soft-Delete)
-        $deletedPosts = Database::fetchAll(
-            "SELECT 
-                p.id,
-                p.content,
-                p.deleted_at,
-                u.username
-             FROM forum_posts p
-             JOIN users u ON u.id = p.user_id
-             WHERE p.deleted_at IS NOT NULL
-             ORDER BY p.deleted_at DESC
-             LIMIT 50"
-        ) ?? [];
+        $type   = $_GET['type'] ?? '';
+        $status = $_GET['status'] ?? '';
 
-        // 📜 Moderations-Logs
-        $logs = Database::fetchAll(
-            "SELECT 
-                ml.created_at,
-                u.username AS moderator,
-                ml.action,
-                ml.target_type,
-                ml.target_id,
-                ml.reason
-             FROM moderation_logs ml
-             LEFT JOIN users u ON u.id = ml.moderator_id
-             ORDER BY ml.created_at DESC
-             LIMIT 100"
-        ) ?? [];
+        $where  = [];
+        $params = [];
 
-        View::render('admin/moderation/panel', [
-            'title'        => 'Moderations-Panel',
-            'deletedPosts' => $deletedPosts,
-            'logs'         => $logs
+        if ($type !== '') {
+            $where[]  = 'action_type = ?';
+            $params[] = $type;
+        }
+
+        if ($status === 'active') {
+            $where[] = 'active = 1';
+        } elseif ($status === 'inactive') {
+            $where[] = 'active = 0';
+        }
+
+        $sql = "SELECT ua.*, u.username
+                FROM user_actions ua
+                LEFT JOIN users u ON u.id = ua.user_id";
+
+        if ($where) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+
+        $sql .= ' ORDER BY ua.created_at DESC LIMIT 200';
+
+        $actions = Database::fetchAll($sql, $params) ?? [];
+
+        View::render('admin/moderation/actions', [
+            'title'   => 'Moderationsaktionen',
+            'actions' => $actions,
+            'filter'  => [
+                'type'   => $type,
+                'status' => $status
+            ]
         ]);
+    }
+
+    public function createAction(): void
+    {
+        Security::requireModerator();
+
+        View::render('admin/moderation/action-form', [
+            'title'  => 'Aktion erstellen',
+            'action' => null
+        ]);
+    }
+
+    public function storeAction(): void
+    {
+        Security::requireModerator();
+        Security::checkCsrf();
+
+        $username = trim($_POST['username'] ?? '');
+        $type     = $_POST['action_type'] ?? '';
+        $reason   = trim($_POST['reason'] ?? '');
+        $duration = isset($_POST['duration']) ? (int)$_POST['duration'] : null;
+
+        if ($username === '' || $type === '' || $reason === '') {
+            $_SESSION['flash_error'] = 'Alle Felder sind erforderlich.';
+            header('Location: /admin/moderation/actions/create');
+            exit;
+        }
+
+        $user = Database::fetch(
+            "SELECT id FROM users WHERE username = ?",
+            [$username]
+        );
+
+        if (!$user) {
+            $_SESSION['flash_error'] = 'Benutzer nicht gefunden.';
+            header('Location: /admin/moderation/actions/create');
+            exit;
+        }
+
+        $expiresAt = null;
+        if ($duration && in_array($type, ['ban', 'mute'], true)) {
+            $expiresAt = date('Y-m-d H:i:s', time() + ($duration * 86400));
+        }
+
+        Database::execute(
+            "INSERT INTO user_actions
+             (user_id, action_type, reason, duration_days, expires_at, created_by, active)
+             VALUES (?, ?, ?, ?, ?, ?, 1)",
+            [
+                $user['id'],
+                $type,
+                $reason,
+                $duration,
+                $expiresAt,
+                $_SESSION['user']['username']
+            ]
+        );
+
+        if ($type === 'ban') {
+            Database::execute(
+                "UPDATE users SET account_locked = 1 WHERE id = ?",
+                [$user['id']]
+            );
+        }
+
+        UserNotification::create(
+            $username,
+            'Moderationsaktion',
+            "Du hast eine {$type}-Aktion erhalten: {$reason}",
+            'warning'
+        );
+
+        $_SESSION['flash_success'] = 'Aktion wurde erstellt.';
+        header('Location: /admin/moderation/actions');
+        exit;
+    }
+
+    public function deactivateAction(): void
+    {
+        Security::requireModerator();
+        Security::checkCsrf();
+
+        $id = (int)($_POST['id'] ?? 0);
+        if ($id <= 0) {
+            http_response_code(400);
+            exit;
+        }
+
+        $action = Database::fetch(
+            "SELECT ua.*, u.username
+             FROM user_actions ua
+             LEFT JOIN users u ON u.id = ua.user_id
+             WHERE ua.id = ?",
+            [$id]
+        );
+
+        if (!$action) {
+            http_response_code(404);
+            exit;
+        }
+
+        Database::execute(
+            "UPDATE user_actions SET active = 0 WHERE id = ?",
+            [$id]
+        );
+
+        if ($action['action_type'] === 'ban') {
+            $activeBans = Database::fetch(
+                "SELECT COUNT(*) AS count
+                 FROM user_actions
+                 WHERE user_id = ? AND action_type = 'ban' AND active = 1",
+                [$action['user_id']]
+            )['count'] ?? 0;
+
+            if ($activeBans == 0) {
+                Database::execute(
+                    "UPDATE users SET account_locked = 0 WHERE id = ?",
+                    [$action['user_id']]
+                );
+            }
+        }
+
+        UserNotification::create(
+            $action['username'],
+            'Sperre aufgehoben',
+            'Deine Sperre wurde aufgehoben.',
+            'success'
+        );
+
+        $_SESSION['flash_success'] = 'Aktion wurde deaktiviert.';
+        header('Location: /admin/moderation/actions');
+        exit;
     }
 }

@@ -3,35 +3,14 @@ declare(strict_types=1);
 
 class AdminForumController
 {
-    /* =========================================================
-       ACCESS GUARD (PERMISSION-BASIERT)
-    ========================================================= */
-
-    private function guard(string $permission): void
-    {
-        if (
-            empty($_SESSION['user']) ||
-            !Permission::has($permission)
-        ) {
-            http_response_code(403);
-            View::render('errors/403', [
-                'title' => 'Zugriff verweigert'
-            ]);
-            exit;
-        }
-    }
-
-    /* =========================
-       FORUM ÜBERSICHT
-    ========================= */
     public function index(): void
     {
-        $this->guard('admin.forum.view');
+        Security::requireModerator();
 
         $stats = [
-            'threads' => Database::fetch('SELECT COUNT(*) AS count FROM forum_threads')['count'] ?? 0,
-            'posts' => Database::fetch('SELECT COUNT(*) AS count FROM forum_posts WHERE is_deleted = 0')['count'] ?? 0,
-            'categories' => Database::fetch('SELECT COUNT(*) AS count FROM forum_categories')['count'] ?? 0,
+            'threads'     => Database::fetch('SELECT COUNT(*) AS count FROM forum_threads')['count'] ?? 0,
+            'posts'       => Database::fetch('SELECT COUNT(*) AS count FROM forum_posts WHERE is_deleted = 0')['count'] ?? 0,
+            'categories'  => Database::fetch('SELECT COUNT(*) AS count FROM forum_categories')['count'] ?? 0,
         ];
 
         $recentThreads = Database::fetchAll(
@@ -46,22 +25,19 @@ class AdminForumController
         View::render('admin/forum/index', [
             'title'   => 'Forum Verwaltung',
             'stats'   => $stats,
-            'threads'=> $recentThreads
+            'threads' => $recentThreads
         ]);
     }
 
-    /* =========================
-       STICKY TOGGLE
-    ========================= */
     public function toggleSticky(): void
     {
-        $this->guard('admin.forum.moderate');
+        Security::requireModerator();
         Security::checkCsrf();
 
         $threadId = (int)($_POST['id'] ?? 0);
         if ($threadId <= 0) {
             http_response_code(400);
-            return;
+            exit;
         }
 
         Database::execute(
@@ -75,18 +51,15 @@ class AdminForumController
         exit;
     }
 
-    /* =========================
-       LOCK TOGGLE
-    ========================= */
     public function toggleLock(): void
     {
-        $this->guard('admin.forum.moderate');
+        Security::requireModerator();
         Security::checkCsrf();
 
         $threadId = (int)($_POST['id'] ?? 0);
         if ($threadId <= 0) {
             http_response_code(400);
-            return;
+            exit;
         }
 
         Database::execute(
@@ -100,18 +73,15 @@ class AdminForumController
         exit;
     }
 
-    /* =========================
-       THREAD LÖSCHEN
-    ========================= */
     public function deleteThread(): void
     {
-        $this->guard('admin.forum.delete');
+        Security::requireModerator();
         Security::checkCsrf();
 
         $threadId = (int)($_POST['id'] ?? 0);
         if ($threadId <= 0) {
             http_response_code(400);
-            return;
+            exit;
         }
 
         $posts = Database::fetchAll(
@@ -138,12 +108,9 @@ class AdminForumController
         exit;
     }
 
-    /* =========================
-       KATEGORIEN ÜBERSICHT
-    ========================= */
     public function categories(): void
     {
-        $this->guard('admin.forum.categories.manage');
+        Security::requireAdmin();
 
         $categories = Database::fetchAll(
             'SELECT c.*,
@@ -158,12 +125,9 @@ class AdminForumController
         ]);
     }
 
-    /* =========================
-       KATEGORIE ERSTELLEN (FORM)
-    ========================= */
     public function createCategory(): void
     {
-        $this->guard('admin.forum.categories.manage');
+        Security::requireAdmin();
 
         View::render('admin/forum/category-form', [
             'title'    => 'Kategorie erstellen',
@@ -171,12 +135,9 @@ class AdminForumController
         ]);
     }
 
-    /* =========================
-       KATEGORIE SPEICHERN
-    ========================= */
     public function storeCategory(): void
     {
-        $this->guard('admin.forum.categories.manage');
+        Security::requireAdmin();
         Security::checkCsrf();
 
         $title = trim($_POST['title'] ?? '');
@@ -210,12 +171,9 @@ class AdminForumController
         exit;
     }
 
-    /* =========================
-       KATEGORIE BEARBEITEN
-    ========================= */
     public function editCategory(int $id): void
     {
-        $this->guard('admin.forum.categories.manage');
+        Security::requireAdmin();
 
         $category = Database::fetch(
             'SELECT * FROM forum_categories WHERE id = ?',
@@ -234,12 +192,9 @@ class AdminForumController
         ]);
     }
 
-    /* =========================
-       KATEGORIE UPDATE
-    ========================= */
     public function updateCategory(): void
     {
-        $this->guard('admin.forum.categories.manage');
+        Security::requireAdmin();
         Security::checkCsrf();
 
         $id    = (int)($_POST['id'] ?? 0);
@@ -249,7 +204,7 @@ class AdminForumController
 
         if ($id <= 0 || $title === '' || $slug === '') {
             http_response_code(400);
-            return;
+            exit;
         }
 
         $exists = Database::fetch(
@@ -274,37 +229,16 @@ class AdminForumController
         exit;
     }
 
-    /* =========================
-       KATEGORIE LÖSCHEN
-    ========================= */
     public function deleteCategory(): void
     {
-        $this->guard('admin.forum.categories.delete');
+        Security::requireAdmin();
         Security::checkCsrf();
 
         $id = (int)($_POST['id'] ?? 0);
         if ($id <= 0) {
             http_response_code(400);
-            return;
-        }
-
-        $threadCount = Database::fetch(
-            'SELECT COUNT(*) AS count FROM forum_threads WHERE category_id = ?',
-            [$id]
-        )['count'] ?? 0;
-
-        if ($threadCount > 0) {
-            $_SESSION['flash_error'] = 'Kategorie enthält noch Threads.';
-            header('Location: /admin/forum/categories');
             exit;
         }
 
-        Database::execute(
-            'DELETE FROM forum_categories WHERE id = ?',
-            [$id]
-        );
-
-        header('Location: /admin/forum/categories');
-        exit;
-    }
-}
+        $threadCount = Database::fetch(
+            'SELECT COUNT(*) A*
