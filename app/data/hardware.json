@@ -1,0 +1,33 @@
+{
+  "pc": [
+    {
+      "icon": "🧠",
+      "title": "CPU",
+      "name": "AMD Ryzen 9 5900X",
+      "details": "12 Cores / 24 Threads"
+    },
+    {
+      "icon": "🎮",
+      "title": "GPU",
+      "name": "RTX 4080",
+      "details": "16 GB GDDR6X"
+    }
+  ],
+  "monitors": [
+    "ASUS ROG 27\" 165Hz",
+    "LG UltraWide 34\""
+  ],
+  "audio": [
+    "Shure SM7B",
+    "GoXLR Mini"
+  ],
+  "camera_lighting": [
+    "Sony Alpha",
+    "Elgato Key Light"
+  ],
+  "extras": [
+    "Stream Deck XL",
+    "Custom Keyboard",
+    "Webcam Backup"
+  ]
+}
