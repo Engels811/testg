@@ -5,8 +5,6 @@ declare(strict_types=1);
 |--------------------------------------------------------------------------
 | Allgemeine Helper-Funktionen
 |--------------------------------------------------------------------------
-| Zentrale Sammlung kleiner Hilfsfunktionen,
-| die global im Projekt verfügbar sind.
 */
 
 /* =========================================================
@@ -29,7 +27,7 @@ if (!function_exists('base_url')) {
 }
 
 /* =========================================================
-   CSRF (EINZIGE WAHRHEIT = Security)
+   CSRF
 ========================================================= */
 
 if (!function_exists('csrf_field')) {
@@ -84,27 +82,67 @@ if (!function_exists('is_logged_in')) {
 }
 
 /**
- * Admin = role_level >= 100
+ * Support (support, moderator, admin, superadmin, owner)
  */
-if (!function_exists('is_admin')) {
-    function is_admin(): bool
+if (!function_exists('is_support')) {
+    function is_support(): bool
     {
-        return
-            isset($_SESSION['user']['role_level']) &&
-            (int)$_SESSION['user']['role_level'] >= 100;
+        $role = $_SESSION['user']['role'] ?? '';
+        return in_array($role, ['support', 'moderator', 'admin', 'superadmin', 'owner'], true);
     }
 }
 
 /**
- * Team = Moderator + Admin
- * role_level >= 50
+ * Moderator (moderator, admin, superadmin, owner)
+ */
+if (!function_exists('is_moderator')) {
+    function is_moderator(): bool
+    {
+        $role = $_SESSION['user']['role'] ?? '';
+        return in_array($role, ['moderator', 'admin', 'superadmin', 'owner'], true);
+    }
+}
+
+/**
+ * Admin (admin, superadmin, owner)
+ */
+if (!function_exists('is_admin')) {
+    function is_admin(): bool
+    {
+        $role = $_SESSION['user']['role'] ?? '';
+        return in_array($role, ['admin', 'superadmin', 'owner'], true);
+    }
+}
+
+/**
+ * Superadmin (superadmin, owner)
+ */
+if (!function_exists('is_superadmin')) {
+    function is_superadmin(): bool
+    {
+        $role = $_SESSION['user']['role'] ?? '';
+        return in_array($role, ['superadmin', 'owner'], true);
+    }
+}
+
+/**
+ * Owner (nur User-ID 1)
+ */
+if (!function_exists('is_owner')) {
+    function is_owner(): bool
+    {
+        return ($_SESSION['user']['id'] ?? 0) === 1;
+    }
+}
+
+/**
+ * Team (support, moderator, admin, superadmin, owner)
  */
 if (!function_exists('is_team')) {
     function is_team(): bool
     {
-        return
-            isset($_SESSION['user']['role_level']) &&
-            (int)$_SESSION['user']['role_level'] >= 50;
+        $role = $_SESSION['user']['role'] ?? '';
+        return in_array($role, ['support', 'moderator', 'admin', 'superadmin', 'owner'], true);
     }
 }
 

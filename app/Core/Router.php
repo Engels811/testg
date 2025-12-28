@@ -501,12 +501,12 @@ class Router
            ADMIN (GESCHÜTZT)
         ========================================================= */
         if (str_starts_with($uri, 'admin')) {
-
-            // 🔐 RBAC-Guard (Admin = role_level >= 100)
+        
+            // TEAM-ZUGRIFF (Support, Moderator, Admin, Superadmin, Owner)
+            $role = $_SESSION['user']['role'] ?? '';
             if (
-                empty($_SESSION['user'])
-                || !isset($_SESSION['user']['role_level'])
-                || $_SESSION['user']['role_level'] < 45
+                empty($_SESSION['user']) ||
+                !in_array($role, ['support', 'moderator', 'admin', 'superadmin', 'owner'], true)
             ) {
                 http_response_code(403);
                 View::render('errors/403', ['title' => 'Zugriff verweigert']);
